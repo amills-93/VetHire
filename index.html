@@ -4,89 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VetHire - Military to Civilian Resume Translator</title>
-  <!-- Third-party client-side parsing libraries loaded via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <!-- VetHire Heuristic Analysis Engine -->
   <script src="analysis-rules.js"></script>
 </head>
 <body>
   <header>
     <h1>VetHire: Military to Civilian Resume Translator</h1>
-    <p>
-      <strong>Empowering Service Members &amp; Veterans</strong> to bridge the language gap between military service and the private sector.
-      Translate combat jargon, service acronyms, and military hierarchy into high-impact corporate language that civilian recruiters and ATS scanners understand.
-    </p>
-    <aside>
-      <p>
-        <mark><strong>OPSEC &amp; Privacy Notice:</strong></mark>
-        This tool runs 100% locally in your web browser. Your resume text is never transmitted to an external server or saved in the cloud.
-        However, you must still adhere to standard Operations Security (OPSEC): <strong>never include classified project names, compartmented information (SAP/SCI), or restricted technology specifications.</strong>
-      </p>
-    </aside>
+    <p>Translate military acronyms, titles, and combat phrasing into private sector language. 100% private and runs locally in your browser.</p>
+    <p><small><mark><strong>OPSEC:</strong> Do not submit classified or compartmented (SAP/SCI) information.</mark></small></p>
     <hr>
   </header>
 
   <main>
-    <!-- Section 1: Resume Input -->
+    <!-- Step 1: Input -->
     <section>
-      <h2>Step 1: Upload or Paste Your Military Resume</h2>
-      <fieldset>
-        <legend>Resume Input Options</legend>
+      <h2>1. Input Resume</h2>
+      <p>
+        <label for="resume-file"><strong>Upload Document (.txt, .docx, .pdf):</strong></label>
+        <input type="file" id="resume-file" accept=".txt,.docx,.pdf">
+        <output id="file-status"></output>
+      </p>
 
-        <p>
-          <label for="resume-file"><strong>Upload Resume Document (.txt, .docx, .pdf):</strong></label><br>
-          <input type="file" id="resume-file" accept=".txt,.docx,.pdf">
-        </p>
-        <p>
-          <output id="file-status"><em>No file chosen yet.</em></output>
-        </p>
+      <p>
+        <label for="resume-text"><strong>Or Paste / Edit Resume Text:</strong></label><br>
+        <textarea id="resume-text" rows="14" cols="85" placeholder="Paste your military resume here..."></textarea>
+      </p>
 
-        <p><strong>— OR —</strong></p>
-
-        <p>
-          <label for="resume-text"><strong>Paste / Edit Resume Text:</strong></label><br>
-          <textarea id="resume-text" rows="16" cols="90" placeholder="Paste your military resume or evaluation bullets here..."></textarea>
-        </p>
-
-        <p>
-          <button type="button" id="analyze-btn"><strong>Analyze Resume</strong></button>
-          <button type="button" id="load-sample-btn">Load Sample Military Resume</button>
-          <button type="button" id="copy-btn">Copy Cleaned Text</button>
-          <button type="button" id="download-btn">Download Cleaned Text (.txt)</button>
-          <button type="button" id="clear-btn">Clear All</button>
-        </p>
-        <p>
-          <output id="action-status"></output>
-        </p>
-      </fieldset>
+      <p>
+        <button type="button" id="analyze-btn"><strong>Analyze Resume</strong></button>
+        <button type="button" id="load-sample-btn">Load Sample</button>
+        <button type="button" id="copy-btn">Copy Text</button>
+        <button type="button" id="download-btn">Download (.txt)</button>
+        <button type="button" id="clear-btn">Clear</button>
+      </p>
+      <p><output id="action-status"></output></p>
     </section>
 
     <hr>
 
-    <!-- Section 2: Analysis Results -->
+    <!-- Step 2: Results -->
     <section id="results-section">
-      <h2>Step 2: Analysis &amp; Civilian Translation Recommendations</h2>
+      <h2>2. Translation &amp; Audit Results</h2>
 
-      <!-- Score & Readiness Overview -->
+      <!-- Scorecard -->
       <fieldset>
         <legend>Civilian Readiness Scorecard</legend>
         <p>
-          <strong>Civilian Readiness Score:</strong>
+          <strong>Civilian Readiness:</strong>
           <meter id="score-meter" min="0" max="100" low="50" high="75" optimum="100" value="0"></meter>
           <strong id="score-display">0 / 100</strong>
           (<span id="score-rating">Awaiting Resume Input</span>)
         </p>
-        <p id="stats-display">
-          Enter or upload your resume above and click <strong>"Analyze Resume"</strong> to generate your demilitarization report.
-        </p>
+        <p id="stats-display">Upload or paste your resume above and click <strong>"Analyze Resume"</strong>.</p>
         <p id="quick-actions-container" hidden>
           <button type="button" id="apply-all-btn"><strong>Auto-Apply All Top Civilian Recommendations</strong></button>
-          <small><em> (Replaces detected military acronyms, titles, and combat phrasing with top civilian corporate terms in the text editor above)</em></small>
         </p>
       </fieldset>
 
-      <!-- OPSEC & Clearance Advisory -->
+      <!-- OPSEC & Clearance Alert -->
       <div id="opsec-container" hidden>
         <br>
         <fieldset>
@@ -97,129 +73,46 @@
 
       <br>
 
-      <!-- Detected Military Acronyms -->
+      <!-- Acronyms -->
       <details open id="acronyms-details">
-        <summary><strong>1. Military Acronyms &amp; Jargon Detected (<span id="acronym-count">0</span>)</strong></summary>
-        <p>
-          Civilian hiring managers and automated applicant tracking systems (ATS) often discard resumes with unexplained military acronyms.
-          Review the civilian equivalents below and apply replacements directly into your resume:
-        </p>
-        <div id="acronyms-table-container">
-          <p><em>No military acronyms detected yet.</em></p>
-        </div>
+        <summary><strong>Military Acronyms &amp; Jargon Detected (<span id="acronym-count">0</span>)</strong></summary>
+        <div id="acronyms-table-container"><p><em>No acronyms detected yet.</em></p></div>
       </details>
 
       <br>
 
-      <!-- Rank & Job Title Translations -->
+      <!-- Ranks -->
       <details open id="ranks-details">
-        <summary><strong>2. Military Rank &amp; Duty Title Translations (<span id="rank-count">0</span>)</strong></summary>
-        <p>
-          Military titles confuse civilian recruiters because they don't reflect corporate functional responsibilities or headcount scope.
-          Translate your military rank into a corporate leadership or specialist role:
-        </p>
-        <div id="ranks-table-container">
-          <p><em>No military ranks detected yet.</em></p>
-        </div>
+        <summary><strong>Military Rank &amp; Duty Title Translations (<span id="rank-count">0</span>)</strong></summary>
+        <div id="ranks-table-container"><p><em>No military ranks detected yet.</em></p></div>
       </details>
 
       <br>
 
-      <!-- Demilitarizing Tone & Action Verbs -->
+      <!-- Tone -->
       <details open id="tone-details">
-        <summary><strong>3. Demilitarizing Tone &amp; Action Verbs (<span id="tone-count">0</span>)</strong></summary>
-        <p>
-          Aggressive, command-heavy, or combat-centric verbs ("commanded", "subordinates", "lethality", "neutralized") can trigger red flags for civilian HR.
-          Frame your leadership around collaboration, strategic direction, and team empowerment:
-        </p>
-        <div id="tone-table-container">
-          <p><em>No combat or aggressive phrasing detected yet.</em></p>
-        </div>
+        <summary><strong>Demilitarizing Tone &amp; Action Verbs (<span id="tone-count">0</span>)</strong></summary>
+        <div id="tone-table-container"><p><em>No aggressive or combat phrasing detected yet.</em></p></div>
       </details>
 
       <br>
 
-      <!-- Bullet Point Metrics & Impact Audit -->
+      <!-- Metrics Audit -->
       <details open id="metrics-details">
-        <summary><strong>4. Bullet Point Impact &amp; Metrics Audit (<span id="metrics-count">0</span>)</strong></summary>
-        <p>
-          In the civilian sector, high-scoring resumes follow the <strong>Google X-Y-Z formula</strong>:
-          <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em>.
-          Bullets must lead with active verbs and quantify your results (headcount, budgets, savings, percentages, time saved).
-        </p>
-        <div id="metrics-list-container">
-          <p><em>No bullet point audit available yet.</em></p>
-        </div>
-      </details>
-    </section>
-
-    <hr>
-
-    <!-- Section 3: Reference & Cheat Sheet -->
-    <section>
-      <h2>Veteran Resume Translation Cheat Sheet</h2>
-      <details>
-        <summary><strong>The STAR Method for Veterans (Click to Expand)</strong></summary>
-        <dl>
-          <dt><strong>S - Situation:</strong></dt>
-          <dd>Describe the challenge, environment, or obstacle your organization faced (e.g. <em>"During a complex multi-site operations deployment..."</em>).</dd>
-          <dt><strong>T - Task:</strong></dt>
-          <dd>State the goal you were tasked with achieving (e.g. <em>"...directed the logistics and inventory readiness for $15M in equipment..."</em>).</dd>
-          <dt><strong>A - Action:</strong></dt>
-          <dd>Explain the specific actions, innovations, or leadership principles you instituted (e.g. <em>"...designed a digital tracking workflow and trained 35 technicians..."</em>).</dd>
-          <dt><strong>R - Result:</strong></dt>
-          <dd>Deliver the measurable business or mission impact (e.g. <em>"...achieving a 100% audit pass rate and reducing maintenance downtime by 32%."</em>).</dd>
-        </dl>
-      </details>
-
-      <details>
-        <summary><strong>Common Military to Corporate Hierarchy Quick Reference</strong></summary>
-        <table border="1" cellpadding="6" cellspacing="0">
-          <thead>
-            <tr>
-              <th>Military Unit / Scope</th>
-              <th>Typical Personnel Size</th>
-              <th>Corporate Equivalent</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Squad / Team</td>
-              <td>4 – 10 personnel</td>
-              <td>Frontline Team / Project Workgroup / Shift Crew</td>
-            </tr>
-            <tr>
-              <td>Platoon</td>
-              <td>30 – 50 personnel</td>
-              <td>Operational Unit / Department Team (Assistant Operations Manager)</td>
-            </tr>
-            <tr>
-              <td>Company / Battery / Troop</td>
-              <td>100 – 200 personnel</td>
-              <td>Regional Branch / Facility Operations (Director / General Manager)</td>
-            </tr>
-            <tr>
-              <td>Battalion / Squadron</td>
-              <td>500 – 1,000 personnel</td>
-              <td>Division / Multi-Unit Organization (VP of Operations)</td>
-            </tr>
-            <tr>
-              <td>Brigade / Regimental Team</td>
-              <td>3,000 – 5,000 personnel</td>
-              <td>Enterprise Business Unit (Executive VP / C-Suite Leadership)</td>
-            </tr>
-          </tbody>
-        </table>
+        <summary><strong>Bullet Point Impact &amp; Metrics Audit (<span id="metrics-count">0</span>)</strong></summary>
+        <div id="metrics-list-container"><p><em>No bullet point audit available yet.</em></p></div>
       </details>
     </section>
   </main>
 
   <hr>
 
-  <!-- Inline Application Logic -->
+  <footer>
+    <p><small>VetHire — Pure HTML Resume Demilitarization Tool. 100% Client-Side &amp; Private.</small></p>
+  </footer>
+
   <script>
     (function () {
-      // DOM Elements
       const resumeFileInput = document.getElementById('resume-file');
       const fileStatusOutput = document.getElementById('file-status');
       const resumeTextarea = document.getElementById('resume-text');
@@ -230,7 +123,6 @@
       const clearBtn = document.getElementById('clear-btn');
       const actionStatusOutput = document.getElementById('action-status');
 
-      // Results Elements
       const scoreMeter = document.getElementById('score-meter');
       const scoreDisplay = document.getElementById('score-display');
       const scoreRating = document.getElementById('score-rating');
@@ -243,27 +135,19 @@
 
       const acronymCountSpan = document.getElementById('acronym-count');
       const acronymsTableContainer = document.getElementById('acronyms-table-container');
-
       const rankCountSpan = document.getElementById('rank-count');
       const ranksTableContainer = document.getElementById('ranks-table-container');
-
       const toneCountSpan = document.getElementById('tone-count');
       const toneTableContainer = document.getElementById('tone-table-container');
-
       const metricsCountSpan = document.getElementById('metrics-count');
       const metricsListContainer = document.getElementById('metrics-list-container');
 
-      // Sample Military Resume for quick testing
       const SAMPLE_RESUME = `JOHN DOE
 San Antonio, TX | (555) 123-4567 | john.doe@email.com
 Security Clearance: Active Top Secret / SCI
 
-PROFESSIONAL SUMMARY
-Experienced First Sergeant and NCOIC with 12 years of proven success directing complex operations, logistical readiness, and cross-functional teams in high-tempo CONUS and OCONUS environments. Demonstrated expertise in S-3 operational planning, inventory audits, and organizational leadership.
-
 EXPERIENCE
-First Sergeant / Operations NCOIC | US Army
-Fort Cavazos, TX & OCONUS | 2018 – Present
+First Sergeant / Operations NCOIC | US Army | 2018 – Present
 * Commanded a company-sized element of 140 subordinates, directing operational logistics and mission readiness.
 * Served as lead S-3 operations planner for 4 multi-national exercises, authoring OPORD directives and contingency COAs.
 * Supervised troops during high-threat combat deployments, maintaining 100% accountability of all assigned weapons and equipment on company hand receipt valued at $18M.
@@ -272,498 +156,253 @@ Fort Cavazos, TX & OCONUS | 2018 – Present
 * Handled logistics coordination with CIF and managed TDY travel vouchers with zero audit findings.
 * Instituted post-mission AAR protocols, identifying key bottlenecks and improving convoy delivery turnaround times by 35%.
 
-Platoon Sergeant / Squad Leader | US Army
-Fort Campbell, KY | 2014 – 2018
+Platoon Sergeant / Squad Leader | US Army | 2014 – 2018
 * Responsible for daily accountability and physical training of 38 soldiers.
 * Counseled subordinates on professional development, resulting in a 40% advancement rate.
 * Managed hazardous materials and sensitive communications equipment (SIPRNET/C4ISR) under strict ROE protocols.
 * Duties included coordinating warehouse supply distribution across 3 remote sites.`;
 
-      // Set up PDF.js worker safely
       if (window.pdfjsLib) {
         try {
           pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
         } catch (e) {
-          console.warn('PDF.js worker initialization notice:', e);
+          console.warn('PDF.js worker notice:', e);
         }
       }
 
-      // Helper to show status messages
-      function setActionStatus(msg, isSuccess = true) {
+      function setStatus(msg, isSuccess = true) {
         actionStatusOutput.innerHTML = isSuccess ? `<strong>Status:</strong> ${msg}` : `<strong>Error:</strong> <mark>${msg}</mark>`;
       }
 
-      // File Reader logic supporting .txt, .docx, .pdf
-      resumeFileInput.addEventListener('change', function (event) {
-        const file = event.target.files[0];
+      function escapeHtml(str) {
+        return !str ? '' : String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      }
+
+      // File upload handler
+      resumeFileInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
         if (!file) return;
 
-        fileStatusOutput.innerHTML = `<em>Loading "${file.name}" (${(file.size / 1024).toFixed(1)} KB)...</em>`;
-        const fileName = file.name.toLowerCase();
+        fileStatusOutput.innerHTML = `<em>Loading "${file.name}"...</em>`;
+        const name = file.name.toLowerCase();
 
-        if (fileName.endsWith('.txt')) {
+        if (name.endsWith('.txt')) {
           const reader = new FileReader();
-          reader.onload = function (e) {
-            resumeTextarea.value = e.target.result;
-            fileStatusOutput.innerHTML = `<strong>Successfully loaded text file:</strong> ${file.name}`;
-            runAnalysis();
-          };
-          reader.onerror = function () {
-            fileStatusOutput.innerHTML = `<mark>Error reading text file.</mark>`;
-          };
+          reader.onload = ev => { resumeTextarea.value = ev.target.result; fileStatusOutput.innerHTML = `Loaded: ${file.name}`; runAnalysis(); };
           reader.readAsText(file);
-        } else if (fileName.endsWith('.docx')) {
-          if (!window.mammoth) {
-            fileStatusOutput.innerHTML = `<mark>DOCX parser (mammoth.js) is not available. Please paste text directly.</mark>`;
-            return;
-          }
+        } else if (name.endsWith('.docx')) {
+          if (!window.mammoth) return setStatus('DOCX parser not loaded. Please paste text directly.', false);
           const reader = new FileReader();
-          reader.onload = function (e) {
-            mammoth.extractRawText({ arrayBuffer: e.target.result })
-              .then(function (result) {
-                resumeTextarea.value = result.value;
-                fileStatusOutput.innerHTML = `<strong>Successfully extracted DOCX file:</strong> ${file.name}`;
-                runAnalysis();
-              })
-              .catch(function (err) {
-                fileStatusOutput.innerHTML = `<mark>Error extracting Word (.docx) document: ${err.message}. Please paste your text.</mark>`;
-              });
+          reader.onload = ev => {
+            mammoth.extractRawText({ arrayBuffer: ev.target.result })
+              .then(res => { resumeTextarea.value = res.value; fileStatusOutput.innerHTML = `Extracted: ${file.name}`; runAnalysis(); })
+              .catch(err => setStatus(`DOCX error: ${err.message}`, false));
           };
           reader.readAsArrayBuffer(file);
-        } else if (fileName.endsWith('.pdf')) {
-          if (!window.pdfjsLib) {
-            fileStatusOutput.innerHTML = `<mark>PDF parser (pdf.js) is not available. Please paste text directly.</mark>`;
-            return;
-          }
+        } else if (name.endsWith('.pdf')) {
+          if (!window.pdfjsLib) return setStatus('PDF parser not loaded. Please paste text directly.', false);
           const reader = new FileReader();
-          reader.onload = function (e) {
-            const typedArray = new Uint8Array(e.target.result);
-            pdfjsLib.getDocument({ data: typedArray }).promise
-              .then(function (pdf) {
-                const numPages = pdf.numPages;
-                const pagePromises = [];
-                for (let i = 1; i <= numPages; i++) {
-                  pagePromises.push(
-                    pdf.getPage(i).then(function (page) {
-                      return page.getTextContent().then(function (textContent) {
-                        return textContent.items.map(item => item.str).join(' ');
-                      });
-                    })
-                  );
+          reader.onload = ev => {
+            pdfjsLib.getDocument({ data: new Uint8Array(ev.target.result) }).promise
+              .then(pdf => {
+                const pages = [];
+                for (let i = 1; i <= pdf.numPages; i++) {
+                  pages.push(pdf.getPage(i).then(page => page.getTextContent().then(tc => tc.items.map(it => it.str).join(' '))));
                 }
-                return Promise.all(pagePromises);
+                return Promise.all(pages);
               })
-              .then(function (pageTexts) {
-                const fullText = pageTexts.join('\n\n').trim();
-                if (!fullText) {
-                  fileStatusOutput.innerHTML = `<mark>Warning: Extracted PDF appears to have no selectable text (it may be a scanned image). Please paste text manually.</mark>`;
-                } else {
-                  resumeTextarea.value = fullText;
-                  fileStatusOutput.innerHTML = `<strong>Successfully extracted PDF file (${pageTexts.length} pages):</strong> ${file.name}`;
-                  runAnalysis();
-                }
+              .then(texts => {
+                const full = texts.join('\n\n').trim();
+                if (!full) return setStatus('PDF appears to contain only scanned images. Please paste text.', false);
+                resumeTextarea.value = full;
+                fileStatusOutput.innerHTML = `Extracted PDF: ${file.name}`;
+                runAnalysis();
               })
-              .catch(function (err) {
-                fileStatusOutput.innerHTML = `<mark>Notice reading PDF (${err.message}). If your browser blocks local PDF workers, please copy and paste your resume text.</mark>`;
-              });
+              .catch(err => setStatus(`PDF error (${err.message}). If browser blocks workers on local files, paste text directly.`, false));
           };
           reader.readAsArrayBuffer(file);
         } else {
-          fileStatusOutput.innerHTML = `<mark>Unsupported file format. Please upload .txt, .docx, or .pdf files, or paste text below.</mark>`;
+          setStatus('Unsupported format. Use .txt, .docx, or .pdf.', false);
         }
       });
 
-      // Load Sample Resume Button
-      loadSampleBtn.addEventListener('click', function () {
+      loadSampleBtn.addEventListener('click', () => {
         resumeTextarea.value = SAMPLE_RESUME;
-        fileStatusOutput.innerHTML = `<em>Loaded sample Army First Sergeant / NCOIC resume.</em>`;
-        setActionStatus('Loaded sample military resume. Click "Analyze Resume" to view recommendations.');
+        fileStatusOutput.innerHTML = '<em>Sample resume loaded.</em>';
+        setStatus('Loaded sample military resume.');
         runAnalysis();
       });
 
-      // Clear All Button
-      clearBtn.addEventListener('click', function () {
+      clearBtn.addEventListener('click', () => {
         resumeFileInput.value = '';
         resumeTextarea.value = '';
-        fileStatusOutput.innerHTML = `<em>No file chosen yet.</em>`;
-        setActionStatus('Cleared all inputs and results.');
+        fileStatusOutput.innerHTML = '';
         resetResults();
+        setStatus('Cleared all.');
       });
 
-      // Copy Cleaned Text Button
-      copyBtn.addEventListener('click', function () {
+      copyBtn.addEventListener('click', () => {
         const text = resumeTextarea.value;
-        if (!text.trim()) {
-          setActionStatus('Resume editor is empty. Nothing to copy.', false);
-          return;
-        }
-
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text)
-            .then(() => setActionStatus('Copied resume text to clipboard!'))
-            .catch(() => fallbackCopy(text));
-        } else {
-          fallbackCopy(text);
-        }
+        if (!text.trim()) return setStatus('Editor is empty.', false);
+        navigator.clipboard?.writeText(text)
+          .then(() => setStatus('Copied to clipboard!'))
+          .catch(() => {
+            resumeTextarea.select();
+            document.execCommand('copy');
+            setStatus('Copied to clipboard!');
+          });
       });
 
-      function fallbackCopy(text) {
-        resumeTextarea.select();
-        try {
-          document.execCommand('copy');
-          setActionStatus('Copied resume text to clipboard!');
-        } catch (e) {
-          setActionStatus('Failed to copy text. Please select all and press Ctrl+C / Cmd+C.', false);
-        }
-      }
-
-      // Download Cleaned Text (.txt) Button
-      downloadBtn.addEventListener('click', function () {
+      downloadBtn.addEventListener('click', () => {
         const text = resumeTextarea.value;
-        if (!text.trim()) {
-          setActionStatus('Resume editor is empty. Nothing to download.', false);
-          return;
-        }
-
-        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
+        if (!text.trim()) return setStatus('Editor is empty.', false);
         const a = document.createElement('a');
-        a.href = url;
-        a.download = 'demilitarized_civilian_resume.txt';
-        document.body.appendChild(a);
+        a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+        a.download = 'civilian_resume.txt';
         a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        setActionStatus('Downloaded demilitarized resume as "demilitarized_civilian_resume.txt".');
+        URL.revokeObjectURL(a.href);
+        setStatus('Downloaded civilian_resume.txt');
       });
 
-      // Analyze Button
       analyzeBtn.addEventListener('click', runAnalysis);
 
       function resetResults() {
         scoreMeter.value = 0;
         scoreDisplay.textContent = '0 / 100';
         scoreRating.textContent = 'Awaiting Resume Input';
-        statsDisplay.textContent = 'Enter or upload your resume above and click "Analyze Resume" to generate your demilitarization report.';
+        statsDisplay.textContent = 'Upload or paste your resume above and click "Analyze Resume".';
         quickActionsContainer.hidden = true;
         opsecContainer.hidden = true;
         opsecContent.innerHTML = '';
         acronymCountSpan.textContent = '0';
-        acronymsTableContainer.innerHTML = '<p><em>No military acronyms detected yet.</em></p>';
+        acronymsTableContainer.innerHTML = '<p><em>No acronyms detected yet.</em></p>';
         rankCountSpan.textContent = '0';
         ranksTableContainer.innerHTML = '<p><em>No military ranks detected yet.</em></p>';
         toneCountSpan.textContent = '0';
-        toneTableContainer.innerHTML = '<p><em>No combat or aggressive phrasing detected yet.</em></p>';
+        toneTableContainer.innerHTML = '<p><em>No aggressive or combat phrasing detected yet.</em></p>';
         metricsCountSpan.textContent = '0';
         metricsListContainer.innerHTML = '<p><em>No bullet point audit available yet.</em></p>';
       }
 
-      // Execute Analysis
-      function runAnalysis() {
-        const text = resumeTextarea.value;
-        if (!text || !text.trim()) {
-          resetResults();
-          setActionStatus('Please enter or upload a resume to analyze.', false);
+      // Generic helper to render clean replacement tables without duplication
+      function renderTable(container, countSpan, items, type, headers, rowFn, emptyMsg) {
+        countSpan.textContent = items.length;
+        if (items.length === 0) {
+          container.innerHTML = `<p>&#10004; ${emptyMsg}</p>`;
           return;
         }
 
-        if (!window.VetHire || typeof VetHire.analyzeResume !== 'function') {
-          setActionStatus('Analysis engine failed to load. Check console for errors.', false);
-          return;
-        }
+        let html = '<table border="1" cellpadding="6" cellspacing="0"><thead><tr>';
+        headers.forEach(h => html += `<th>${h}</th>`);
+        html += '<th>Suggested Civilian Translation</th><th>Action</th></tr></thead><tbody>';
 
-        const result = VetHire.analyzeResume(text);
+        items.forEach((item, idx) => {
+          const selectId = `${type}-select-${idx}`;
+          const options = (item.alternatives || [item.civilian]).map(alt => `<option value="${escapeHtml(alt)}">${escapeHtml(alt)}</option>`).join('');
+          html += `<tr>${rowFn(item)}<td><select id="${selectId}" aria-label="Replacement for ${escapeHtml(item.term || item.phrase)}">${options}</select></td><td><button type="button" class="replace-btn" data-type="${type}" data-index="${idx}">Replace</button></td></tr>`;
+        });
 
-        // Update Scorecard
-        scoreMeter.value = result.score;
-        scoreDisplay.textContent = `${result.score} / 100`;
-        scoreRating.textContent = result.scoreRating;
-        statsDisplay.innerHTML = `
-          <strong>Words:</strong> ${result.stats.wordCount} |
-          <strong>Achievement Bullets Analyzed:</strong> ${result.stats.bulletCount} |
-          <strong>Bullets with Quantifiable Metrics:</strong> ${result.stats.metricPercent}% |
-          <strong>Total Flagged Military Jargon / Phrasing Items:</strong> ${result.stats.issuesCount}
-        `;
-
-        // Show Quick Action button if there are actionable items
-        const hasReplacements = result.acronyms.length > 0 || result.ranks.length > 0 || result.tone.length > 0;
-        quickActionsContainer.hidden = !hasReplacements;
-
-        // Render OPSEC & Clearance
-        if (result.opsec && result.opsec.length > 0) {
-          opsecContainer.hidden = false;
-          let html = '<ul>';
-          for (const item of result.opsec) {
-            html += `<li><strong>${item.term}:</strong> ${item.advice} <em>(Detected: ${item.matches.join(', ')})</em></li>`;
-          }
-          html += '</ul>';
-          opsecContent.innerHTML = html;
-        } else {
-          opsecContainer.hidden = true;
-          opsecContent.innerHTML = '';
-        }
-
-        // Render Acronyms Table
-        acronymCountSpan.textContent = result.acronyms.length;
-        if (result.acronyms.length === 0) {
-          acronymsTableContainer.innerHTML = '<p>&#10004; <strong>No untranslated military acronyms found!</strong> Excellent job demilitarizing terminology.</p>';
-        } else {
-          let tableHtml = `
-            <table border="1" cellpadding="6" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Acronym</th>
-                  <th>Occurrences</th>
-                  <th>Full Meaning</th>
-                  <th>Suggested Civilian Translation</th>
-                  <th>Recruiter Context</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          result.acronyms.forEach((item, index) => {
-            const selectId = `acronym-select-${index}`;
-            let optionsHtml = '';
-            item.alternatives.forEach(alt => {
-              optionsHtml += `<option value="${escapeHtml(alt)}">${escapeHtml(alt)}</option>`;
-            });
-
-            tableHtml += `
-              <tr>
-                <td><strong>${escapeHtml(item.term)}</strong></td>
-                <td>${item.count}</td>
-                <td>${escapeHtml(item.definition)}</td>
-                <td>
-                  <select id="${selectId}" aria-label="Choose civilian replacement for ${escapeHtml(item.term)}">
-                    ${optionsHtml}
-                  </select>
-                </td>
-                <td><small>${escapeHtml(item.context)}</small></td>
-                <td>
-                  <button type="button" class="replace-btn" data-type="acronym" data-index="${index}">Replace in Resume</button>
-                </td>
-              </tr>
-            `;
-          });
-          tableHtml += '</tbody></table>';
-          acronymsTableContainer.innerHTML = tableHtml;
-        }
-
-        // Render Ranks Table
-        rankCountSpan.textContent = result.ranks.length;
-        if (result.ranks.length === 0) {
-          ranksTableContainer.innerHTML = '<p>&#10004; <strong>No raw military ranks or unit designations found.</strong></p>';
-        } else {
-          let tableHtml = `
-            <table border="1" cellpadding="6" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Military Title</th>
-                  <th>Occurrences</th>
-                  <th>Organizational Scope</th>
-                  <th>Suggested Civilian Leadership Title</th>
-                  <th>Resume Tip</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          result.ranks.forEach((item, index) => {
-            const selectId = `rank-select-${index}`;
-            let optionsHtml = '';
-            item.alternatives.forEach(alt => {
-              optionsHtml += `<option value="${escapeHtml(alt)}">${escapeHtml(alt)}</option>`;
-            });
-
-            tableHtml += `
-              <tr>
-                <td><strong>${escapeHtml(item.term)}</strong></td>
-                <td>${item.count}</td>
-                <td><small>${escapeHtml(item.scope)}</small></td>
-                <td>
-                  <select id="${selectId}" aria-label="Choose civilian replacement for ${escapeHtml(item.term)}">
-                    ${optionsHtml}
-                  </select>
-                </td>
-                <td><small>${escapeHtml(item.tip)}</small></td>
-                <td>
-                  <button type="button" class="replace-btn" data-type="rank" data-index="${index}">Replace in Resume</button>
-                </td>
-              </tr>
-            `;
-          });
-          tableHtml += '</tbody></table>';
-          ranksTableContainer.innerHTML = tableHtml;
-        }
-
-        // Render Tone Table
-        toneCountSpan.textContent = result.tone.length;
-        if (result.tone.length === 0) {
-          toneTableContainer.innerHTML = '<p>&#10004; <strong>No combat-heavy or authoritarian phrasing found!</strong> Tone is professional and collaborative.</p>';
-        } else {
-          let tableHtml = `
-            <table border="1" cellpadding="6" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Military Phrase</th>
-                  <th>Occurrences</th>
-                  <th>Why Civilian HR Cautions</th>
-                  <th>Suggested Corporate Alternative</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          result.tone.forEach((item, index) => {
-            const selectId = `tone-select-${index}`;
-            let optionsHtml = '';
-            item.alternatives.forEach(alt => {
-              optionsHtml += `<option value="${escapeHtml(alt)}">${escapeHtml(alt)}</option>`;
-            });
-
-            tableHtml += `
-              <tr>
-                <td><strong>${escapeHtml(item.phrase)}</strong></td>
-                <td>${item.count}</td>
-                <td><small>${escapeHtml(item.rationale)}</small></td>
-                <td>
-                  <select id="${selectId}" aria-label="Choose civilian replacement for ${escapeHtml(item.phrase)}">
-                    ${optionsHtml}
-                  </select>
-                </td>
-                <td>
-                  <button type="button" class="replace-btn" data-type="tone" data-index="${index}">Replace in Resume</button>
-                </td>
-              </tr>
-            `;
-          });
-          tableHtml += '</tbody></table>';
-          toneTableContainer.innerHTML = tableHtml;
-        }
-
-        // Render Bullet Metrics & Weak Openings Audit
-        metricsCountSpan.textContent = result.bulletAudit.length;
-        if (result.bulletAudit.length === 0) {
-          metricsListContainer.innerHTML = '<p>&#10004; <strong>All detected bullet points include measurable metrics and active phrasing!</strong> Excellent application of the STAR / Google X-Y-Z formula.</p>';
-        } else {
-          let listHtml = '<ol>';
-          result.bulletAudit.forEach(item => {
-            listHtml += `
-              <li>
-                <p><code>"${escapeHtml(item.bullet)}"</code></p>
-                <ul>
-                  ${item.issues.map(iss => `<li><mark>${escapeHtml(iss)}</mark></li>`).join('')}
-                </ul>
-                <p><strong>Recommendation:</strong> ${item.suggestions.join(' ')}</p>
-              </li>
-            `;
-          });
-          listHtml += '</ol>';
-          metricsListContainer.innerHTML = listHtml;
-        }
-
-        // Attach event listeners to all dynamic replace buttons
-        attachReplaceListeners(result);
-        setActionStatus(`Analysis complete! Identified ${result.stats.issuesCount} opportunities for demilitarization.`);
+        html += '</tbody></table>';
+        container.innerHTML = html;
       }
 
-      // Handler for individual item replacement
-      function attachReplaceListeners(result) {
-        const buttons = document.querySelectorAll('.replace-btn');
-        buttons.forEach(button => {
-          button.addEventListener('click', function () {
+      function runAnalysis() {
+        const text = resumeTextarea.value;
+        if (!text?.trim()) { resetResults(); return setStatus('Please enter or upload a resume to analyze.', false); }
+        if (!window.VetHire) return setStatus('Analysis engine failed to load.', false);
+
+        const res = VetHire.analyzeResume(text);
+
+        scoreMeter.value = res.score;
+        scoreDisplay.textContent = `${res.score} / 100`;
+        scoreRating.textContent = res.scoreRating;
+        statsDisplay.innerHTML = `<strong>Words:</strong> ${res.stats.wordCount} | <strong>Bullets Analyzed:</strong> ${res.stats.bulletCount} | <strong>With Metrics:</strong> ${res.stats.metricPercent}% | <strong>Flagged Items:</strong> ${res.stats.issuesCount}`;
+
+        quickActionsContainer.hidden = !(res.acronyms.length || res.ranks.length || res.tone.length);
+
+        // OPSEC
+        if (res.opsec?.length) {
+          opsecContainer.hidden = false;
+          opsecContent.innerHTML = '<ul>' + res.opsec.map(o => `<li><strong>${o.term}:</strong> ${o.advice} <em>(${o.matches.join(', ')})</em></li>`).join('') + '</ul>';
+        } else {
+          opsecContainer.hidden = true;
+        }
+
+        // Render Tables via unified helper
+        renderTable(
+          acronymsTableContainer, acronymCountSpan, res.acronyms, 'acronym',
+          ['Acronym', 'Count', 'Meaning', 'Context'],
+          item => `<td><strong>${escapeHtml(item.term)}</strong></td><td>${item.count}</td><td>${escapeHtml(item.definition)}</td><td><small>${escapeHtml(item.context)}</small></td>`,
+          'No untranslated military acronyms found.'
+        );
+
+        renderTable(
+          ranksTableContainer, rankCountSpan, res.ranks, 'rank',
+          ['Military Title', 'Count', 'Scope', 'Tip'],
+          item => `<td><strong>${escapeHtml(item.term)}</strong></td><td>${item.count}</td><td><small>${escapeHtml(item.scope)}</small></td><td><small>${escapeHtml(item.tip)}</small></td>`,
+          'No raw military ranks found.'
+        );
+
+        renderTable(
+          toneTableContainer, toneCountSpan, res.tone, 'tone',
+          ['Military Phrase', 'Count', 'Recruiter Context'],
+          item => `<td><strong>${escapeHtml(item.phrase)}</strong></td><td>${item.count}</td><td><small>${escapeHtml(item.rationale)}</small></td>`,
+          'No combat or aggressive phrasing found.'
+        );
+
+        // Render Bullet Audit
+        metricsCountSpan.textContent = res.bulletAudit.length;
+        if (res.bulletAudit.length === 0) {
+          metricsListContainer.innerHTML = '<p>&#10004; All bullet points include measurable metrics and strong action verbs!</p>';
+        } else {
+          metricsListContainer.innerHTML = '<ol>' + res.bulletAudit.map(item => `
+            <li>
+              <p><code>"${escapeHtml(item.bullet)}"</code></p>
+              <ul>${item.issues.map(iss => `<li><mark>${escapeHtml(iss)}</mark></li>`).join('')}</ul>
+              <p><small><strong>Tip:</strong> ${item.suggestions.join(' ')}</small></p>
+            </li>
+          `).join('') + '</ol>';
+        }
+
+        // Attach replace click listeners
+        document.querySelectorAll('.replace-btn').forEach(btn => {
+          btn.addEventListener('click', function () {
             const type = this.getAttribute('data-type');
-            const index = parseInt(this.getAttribute('data-index'), 10);
-            let targetItem, selectId;
+            const idx = parseInt(this.getAttribute('data-index'), 10);
+            const item = res[type === 'acronym' ? 'acronyms' : type === 'rank' ? 'ranks' : 'tone'][idx];
+            if (!item) return;
 
-            if (type === 'acronym') {
-              targetItem = result.acronyms[index];
-              selectId = `acronym-select-${index}`;
-            } else if (type === 'rank') {
-              targetItem = result.ranks[index];
-              selectId = `rank-select-${index}`;
-            } else if (type === 'tone') {
-              targetItem = result.tone[index];
-              selectId = `tone-select-${index}`;
-            }
+            const chosen = document.getElementById(`${type}-select-${idx}`)?.value || item.civilian;
+            const terms = item.rawMatches?.length ? Array.from(new Set(item.rawMatches)) : [item.originalText || item.term || item.phrase];
 
-            if (!targetItem) return;
-
-            const selectElem = document.getElementById(selectId);
-            const chosenReplacement = selectElem ? selectElem.value : targetItem.civilian;
-
-            // Find all raw matched strings for this item and replace them
-            let currentText = resumeTextarea.value;
-            const termsToReplace = targetItem.rawMatches && targetItem.rawMatches.length > 0 
-              ? Array.from(new Set(targetItem.rawMatches)) 
-              : [targetItem.originalText || targetItem.term];
-
-            for (const term of termsToReplace) {
-              currentText = VetHire.replaceTerm(currentText, term, chosenReplacement);
-            }
-
-            resumeTextarea.value = currentText;
-            setActionStatus(`Replaced "${targetItem.term || targetItem.phrase}" with "${chosenReplacement}".`);
+            let cur = resumeTextarea.value;
+            terms.forEach(t => cur = VetHire.replaceTerm(cur, t, chosen));
+            resumeTextarea.value = cur;
+            setStatus(`Replaced "${item.term || item.phrase}" with "${chosen}".`);
             runAnalysis();
           });
         });
+
+        setStatus(`Analysis complete. Found ${res.stats.issuesCount} opportunities for improvement.`);
       }
 
-      // Handler for Auto-Apply All Top Recommendations
-      applyAllBtn.addEventListener('click', function () {
+      applyAllBtn.addEventListener('click', () => {
         const text = resumeTextarea.value;
         if (!text.trim()) return;
+        const res = VetHire.analyzeResume(text);
+        let cur = text;
+        let count = 0;
 
-        const result = VetHire.analyzeResume(text);
-        let updatedText = text;
-        let appliedCount = 0;
+        [...res.acronyms, ...res.ranks, ...res.tone].forEach(item => {
+          const repl = item.alternatives?.[0] || item.civilian;
+          const terms = item.rawMatches?.length ? Array.from(new Set(item.rawMatches)) : [item.originalText || item.term || item.phrase];
+          terms.forEach(t => { cur = VetHire.replaceTerm(cur, t, repl); count++; });
+        });
 
-        // Apply top acronym replacements
-        for (const item of result.acronyms) {
-          const replacement = item.alternatives && item.alternatives[0] ? item.alternatives[0] : item.civilian;
-          const terms = item.rawMatches ? Array.from(new Set(item.rawMatches)) : [item.term];
-          for (const t of terms) {
-            updatedText = VetHire.replaceTerm(updatedText, t, replacement);
-            appliedCount++;
-          }
-        }
-
-        // Apply top rank replacements
-        for (const item of result.ranks) {
-          const replacement = item.alternatives && item.alternatives[0] ? item.alternatives[0] : item.civilian;
-          const terms = item.rawMatches ? Array.from(new Set(item.rawMatches)) : [item.term];
-          for (const t of terms) {
-            updatedText = VetHire.replaceTerm(updatedText, t, replacement);
-            appliedCount++;
-          }
-        }
-
-        // Apply top tone replacements
-        for (const item of result.tone) {
-          const replacement = item.alternatives && item.alternatives[0] ? item.alternatives[0] : item.civilian;
-          const terms = item.rawMatches ? Array.from(new Set(item.rawMatches)) : [item.originalText || item.phrase];
-          for (const t of terms) {
-            updatedText = VetHire.replaceTerm(updatedText, t, replacement);
-            appliedCount++;
-          }
-        }
-
-        resumeTextarea.value = updatedText;
-        setActionStatus(`Auto-applied top corporate recommendations across ${appliedCount} terms.`);
+        resumeTextarea.value = cur;
+        setStatus(`Applied top civilian recommendations to ${count} terms.`);
         runAnalysis();
       });
-
-      // Simple HTML escaping helper for safe table rendering
-      function escapeHtml(str) {
-        if (!str) return '';
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#39;');
-      }
 
     })();
   </script>
