@@ -1,7 +1,4 @@
-/**
- * VetHire - Military to Civilian Resume Translator Rule Engine
- * Works in both browser environments and Node.js.
- */
+
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
     module.exports = factory();
