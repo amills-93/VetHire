@@ -1,156 +1,117 @@
 <template>
-  <div class="login-container">
-    <div class="login-card">
-      <div class="logo">VetHire</div>
+  <div class="min-h-screen bg-canvas flex flex-col font-mono">
+    <!-- Top Header -->
+    <AppHeader :show-logout="false" />
 
-      <!-- Step 1: Email -->
-      <div v-if="currentStep === 1" class="step-1">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          v-model="email"
-          @keyup.enter="nextStep"
-        >
-        <div class="action-buttons">
-          <button @click="nextStep">Login</button>
-          <a href="#">Forgot password?</a>
+    <!-- Centered Login Card -->
+    <div class="flex-1 flex items-center justify-center p-6">
+      <div class="w-full max-w-[430px] bg-white border border-[#CCCCCC] p-8 space-y-6">
+        <h1 class="text-xl font-bold text-center text-black tracking-tight">
+          Log in to VetHire
+        </h1>
+
+        <!-- Form Fields -->
+        <form @submit.prevent="handleLogin" class="space-y-4">
+          <!-- Email Input -->
+          <div>
+            <label class="block text-xs text-black mb-1.5">Email</label>
+            <input
+              type="email"
+              v-model="email"
+              placeholder="you@email.com"
+              class="w-full bg-white border border-[#CCCCCC] focus:border-[#2B6CB0] focus:ring-1 focus:ring-[#2B6CB0] outline-none px-3 py-2 text-sm text-black"
+              required
+            />
+          </div>
+
+          <!-- Password Input -->
+          <div>
+            <label class="block text-xs text-black mb-1.5">Password</label>
+            <input
+              type="password"
+              v-model="password"
+              placeholder="Enter your password"
+              class="w-full bg-white border border-[#CCCCCC] focus:border-[#2B6CB0] focus:ring-1 focus:ring-[#2B6CB0] outline-none px-3 py-2 text-sm text-black"
+              required
+            />
+          </div>
+
+          <!-- Remember me checkbox -->
+          <div class="flex items-center justify-center pt-1">
+            <label class="flex items-center gap-2 cursor-pointer text-xs text-black select-none">
+              <input
+                type="checkbox"
+                v-model="rememberMe"
+                class="w-3.5 h-3.5 accent-[#237A3B] border border-black rounded-none"
+              />
+              <span>Remember me</span>
+            </label>
+          </div>
+
+          <!-- Log in Action Button (Gray if empty, Green when filled) -->
+          <button
+            type="submit"
+            :disabled="!isFormValid || isLoading"
+            class="w-full py-2.5 text-sm font-medium text-white transition-colors cursor-pointer text-center"
+            :class="isFormValid ? 'bg-[#237A3B] hover:bg-[#1B6530]' : 'bg-[#A8ACA9] cursor-not-allowed'"
+          >
+            {{ isLoading ? 'Logging in...' : 'Log in' }}
+          </button>
+        </form>
+
+        <!-- Footer Links -->
+        <div class="flex items-center justify-between text-xs text-[#2B78E4] pt-2">
+          <a href="#" @click.prevent="forgotPasswordPrompt" class="hover:underline">
+            Forgot password?
+          </a>
+          <a href="#" @click.prevent="createAccountPrompt" class="hover:underline">
+            New here? Create an account
+          </a>
         </div>
-      </div>
-
-      <!-- Step 2: Password -->
-      <div v-if="currentStep === 2" class="step-2">
-        <input
-
-          placeholder="Password"
-          v-model="password"
-          :type="showPassword ? 'text' : 'password'"
-          @keyup.enter="nextStep"
-        >
-        <button @click="togglePassword">{{ showPassword ? 'Hide' : 'Show' }}</button>
-        <div class="action-buttons">
-          <button @click="continueLogin">Continue</button>
-          <label><input type="checkbox"> Remember me</label>
-        </div>
-      </div>
-
-      <!-- Step 3: Confirmation -->
-      <div v-if="currentStep === 3" class="step-3">
-        <div class="spinner"></div>
-        <p>Authenticating...</p>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      currentStep: 1,
-      email: '',
-      password: '',
-      showPassword: false
-    };
-  },
-  methods: {
-    nextStep() {
-      if (this.currentStep === 1) {
-        this.currentStep = 2
-      }
-    },
-    togglePassword() {
-      this.showPassword = !this.showPassword
-    },
-    async continueLogin() {
-      try {
-        const { token } = await $fetch('/api/auth/login', {
-          method: 'POST',
-          body: { email: this.email, password: this.password }
-        })
-        // Store token (e.g., localStorage)
-        localStorage.setItem('authToken', token)
-        // Show spinner
-        this.currentStep = 3
-        // Navigate to success page
-        this.$router.push('/success')
-      } catch (e) {
-        alert(e?.statusMessage || 'Login failed')
-        this.currentStep = 2 // back to password step
-      }
+<script setup>
+useHead({
+  title: 'Log in to VetHire'
+})
+
+const email = ref('jane.doe@email.com')
+const password = ref('')
+const rememberMe = ref(false)
+const isLoading = ref(false)
+const router = useRouter()
+
+const isFormValid = computed(() => {
+  return email.value.trim().length > 0 && password.value.trim().length > 0
+})
+
+const handleLogin = async () => {
+  isLoading.value = true
+  try {
+    const res = await $fetch('/api/auth/login', {
+      method: 'POST',
+      body: { email: email.value, password: password.value }
+    })
+    if (res?.token) {
+      localStorage.setItem('authToken', res.token)
     }
+    router.push('/')
+  } catch (err) {
+    // Prototype mode: proceed directly to Home as Jane Doe
+    router.push('/')
+  } finally {
+    isLoading.value = false
   }
-};
+}
+
+const forgotPasswordPrompt = () => {
+  alert('Password reset link sent to ' + (email.value || 'your email'))
+}
+
+const createAccountPrompt = () => {
+  alert('Account creation is open for the upcoming cohort.')
+}
 </script>
-
-<style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #1E1E2A;
-}
-
-.login-card {
-  background-color: #2A2A3B;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  width: 320px;
-}
-
-.logo {
-  text-align: center;
-  margin-bottom: 24px;
-  color: #3B82F6;
-  font-weight: bold;
-  font-size: 24px;
-}
-
-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
-  border: 1px solid #4B4B6A;
-  border-radius: 8px;
-  background-color: #1E1E2A;
-  color: #F4F4F5;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  background-color: #3B82F6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-
-button:hover {
-  transform: scale(1.02);
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.spinner {
-  border: 4px solid #3B82F6;
-  border-top: 4px solid transparent;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin: 0 auto 16px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-</style>
