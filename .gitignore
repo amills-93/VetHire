@@ -1,7 +1,6 @@
 FigmaDesign/
 node_modules/
 .nuxt/
-
 .env
 .output/
 .data/
