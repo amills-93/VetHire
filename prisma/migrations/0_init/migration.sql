@@ -1,0 +1,32 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- CreateSchema
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = N'dbo') EXEC sp_executesql N'CREATE SCHEMA [dbo];';
+
+-- CreateTable
+CREATE TABLE [dbo].[User] (
+    [id] NVARCHAR(1000) NOT NULL,
+    [email] NVARCHAR(1000) NOT NULL,
+    [name] NVARCHAR(1000) NOT NULL,
+    [password] NVARCHAR(1000) NOT NULL,
+    [createdAt] DATETIME2 NOT NULL CONSTRAINT [User_createdAt_df] DEFAULT CURRENT_TIMESTAMP,
+    [updatedAt] DATETIME2 NOT NULL CONSTRAINT [User_updatedAt_df] DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT [User_pkey] PRIMARY KEY CLUSTERED ([id]),
+    CONSTRAINT [User_email_key] UNIQUE NONCLUSTERED ([email])
+);
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
+
