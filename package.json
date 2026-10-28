@@ -6,12 +6,12 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "generate": "nuxt generate",
-    "seed": "node scripts/seed.js",
-      },
+    "seed": "node scripts/seed.js"
+  },
   "dependencies": {
-    "nuxt": "^3",
-    "bcrypt": "^5",
-    "jsonwebtoken": "^9"
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9",
+    "nuxt": "^3"
   },
   "devDependencies": {
     "typescript": "^5"
