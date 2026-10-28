@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { PrismaClient } from '@prisma/client'
+import { findUserByEmail } from '../utils/userStore'
 
-const prisma = new PrismaClient()
+
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key'
 
 export default defineEventHandler(async (event) => {
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Email and password are required' })
   }
 
-  const user = await prisma.user.findUnique({ where: { email } })
+  const user = findUserByEmail(email)
   if (!user) {
     throw createError({ statusCode: 401, statusMessage: 'Invalid credentials' })
   }
