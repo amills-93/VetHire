@@ -1,0 +1,22 @@
+{
+  "name": "vethire",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "seed": "node scripts/seed.js",
+    "prisma": "prisma"
+  },
+  "dependencies": {
+    "nuxt": "^3",
+    "prisma": "^5",
+    "@prisma/client": "^5",
+    "bcrypt": "^5",
+    "jsonwebtoken": "^9"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}
