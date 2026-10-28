@@ -1,11 +1,11 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  // Disable server-side rendering for static site
+  // Client-rendered SPA; the login page relies on localStorage
   ssr: false,
-  // Configure Nitro for static output (Azure Static Web Apps)
+  // Builds the frontend to .output/public and server/api to an Azure Functions
+  // app in .output/server for Azure Static Web Apps
   nitro: {
-    preset: 'static'
-  },
-  // No server middleware needed; server/api will be auto-handled
+    preset: 'azure'
+  }
 })
