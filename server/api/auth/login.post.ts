@@ -1,9 +1,5 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { findUserByEmail } from '../utils/userStore'
-
-
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key'
 
 export default defineEventHandler(async (event) => {
   const { email, password } = await readBody(event)
@@ -12,7 +8,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Email and password are required' })
   }
 
-  const user = findUserByEmail(email)
+  const user = await usePrisma().user.findUnique({ where: { email } })
   if (!user) {
     throw createError({ statusCode: 401, statusMessage: 'Invalid credentials' })
   }
@@ -22,6 +18,6 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 401, statusMessage: 'Invalid credentials' })
   }
 
-  const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '1h' })
+  const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, getJwtSecret(), { expiresIn: '1h' })
   return { token }
 })
