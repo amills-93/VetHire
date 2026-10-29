@@ -19,13 +19,13 @@
             />
             <button
               @click="submitJob"
-              class="w-full mt-3 bg-[#237A3B] hover:bg-[#1B6530] text-white py-2.5 text-sm font-medium transition-colors cursor-pointer"
+              class="w-full mt-3 bg-vh-green hover:bg-vh-green-hover text-white py-2.5 text-sm font-medium transition-colors cursor-pointer"
             >
               Submit
             </button>
           </div>
 
-          <div class="bg-white border border-[#CCCCCC] p-6 space-y-3 text-center">
+          <div class="bg-white border border-vh-gray-border p-6 space-y-3 text-center">
             <h2 class="text-sm font-bold text-black">
               IT Operations Manager
             </h2>
@@ -36,10 +36,10 @@
               $105k – $130k &bull; Posted 3 days ago &bull; 46 applicants
             </p>
             <div class="flex items-center justify-center gap-2 pt-2">
-              <span class="bg-[#EAF7EE] text-[#237A3B] text-[10px] px-2.5 py-0.5 font-medium">
+              <span class="bg-vh-green-light text-vh-green text-[10px] px-2.5 py-0.5 font-medium">
                 Actively hiring
               </span>
-              <span class="bg-[#EBF3FB] text-[#2B78E4] text-[10px] px-2.5 py-0.5 font-medium">
+              <span class="bg-vh-blue-light text-vh-blue text-[10px] px-2.5 py-0.5 font-medium">
                 Recruiter active this week
               </span>
             </div>
@@ -68,7 +68,7 @@
                 <span
                   v-for="keyword in alreadyOnResume"
                   :key="keyword"
-                  class="border border-[#237A3B] text-[#237A3B] px-2 py-0.5 text-[11px] font-medium"
+                  class="border border-vh-green text-vh-green px-2 py-0.5 text-[11px] font-medium"
                 >
                   &check; {{ keyword }}
                 </span>
@@ -83,7 +83,7 @@
                 <span
                   v-for="keyword in missingFromResume"
                   :key="keyword"
-                  class="border border-[#D9534F] text-[#D9534F] px-2 py-0.5 text-[11px] font-medium"
+                  class="border border-vh-red text-vh-red px-2 py-0.5 text-[11px] font-medium"
                 >
                   &cross; {{ keyword }}
                 </span>
@@ -100,13 +100,13 @@
           <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <button
               @click="addKeywords"
-              class="w-full sm:w-auto bg-[#237A3B] hover:bg-[#1B6530] text-white px-5 py-2.5 text-xs font-bold transition-colors cursor-pointer text-center"
+              class="w-full sm:w-auto bg-vh-green hover:bg-vh-green-hover text-white px-5 py-2.5 text-xs font-bold transition-colors cursor-pointer text-center"
             >
               {{ addedKeywords ? 'Keywords added to resume!' : 'Add suggested keywords' }}
             </button>
             <button
               @click="saveJob"
-              class="w-full sm:w-auto bg-white border border-[#237A3B] hover:bg-[#EAF7EE] text-[#237A3B] px-5 py-2.5 text-xs font-bold transition-colors cursor-pointer text-center"
+              class="w-full sm:w-auto bg-white border border-vh-green hover:bg-vh-green-light text-vh-green px-5 py-2.5 text-xs font-bold transition-colors cursor-pointer text-center"
             >
               {{ saved ? 'Job Saved &check;' : 'Save job' }}
             </button>

@@ -4,7 +4,7 @@
 
     <div
       v-if="showDownloadToast"
-      class="w-full bg-[#237A3B] text-white py-2 px-4 text-center text-xs font-mono flex items-center justify-center gap-3 transition-all"
+      class="w-full bg-vh-green text-white py-2 px-4 text-center text-xs font-mono flex items-center justify-center gap-3 transition-all"
     >
       <span>Downloaded Doe_Jane_Resume_Civilian.pdf &bull; saved to your profile</span>
       <button @click="showDownloadToast = false" class="text-white hover:text-black">&times;</button>
@@ -33,11 +33,11 @@
             <div
               class="p-2.5 text-xs leading-relaxed flex items-start justify-between gap-2 transition-colors"
               :class="activeSuggestionIndex === 0
-                ? 'border-2 border-[#D99B00] bg-white'
-                : suggestions[0].accepted ? 'bg-[#EAF7EE]' : 'bg-neutral-50'"
+                ? 'border-2 border-vh-yellow-border bg-white'
+                : suggestions[0].accepted ? 'bg-vh-green-light' : 'bg-neutral-50'"
             >
               <span>{{ suggestions[0].accepted ? suggestions[0].suggested : suggestions[0].original }}</span>
-              <span class="w-4 h-4 rounded-none bg-[#237A3B] text-white text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
+              <span class="w-4 h-4 rounded-none bg-vh-green text-white text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
             </div>
           </div>
 
@@ -58,11 +58,11 @@
             <div
               class="p-2 text-xs font-medium flex items-center justify-between"
               :class="activeSuggestionIndex === 1
-                ? 'border-2 border-[#D99B00] bg-white'
-                : suggestions[1].accepted ? 'bg-[#EAF7EE]' : 'bg-neutral-50'"
+                ? 'border-2 border-vh-yellow-border bg-white'
+                : suggestions[1].accepted ? 'bg-vh-green-light' : 'bg-neutral-50'"
             >
               <span>{{ suggestions[1].accepted ? suggestions[1].suggested : suggestions[1].original }}</span>
-              <span class="w-4 h-4 bg-[#237A3B] text-white text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
+              <span class="w-4 h-4 bg-vh-green text-white text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
             </div>
 
             <div class="text-[10px] text-neutral-500">
@@ -73,13 +73,13 @@
               <div
                 class="p-2.5 transition-colors flex items-start justify-between gap-2"
                 :class="activeSuggestionIndex === 2
-                  ? 'border-2 border-[#D99B00] bg-white'
-                  : suggestions[2].accepted ? 'bg-[#EAF7EE]' : 'bg-[#FDE8E8]'"
+                  ? 'border-2 border-vh-yellow-border bg-white'
+                  : suggestions[2].accepted ? 'bg-vh-green-light' : 'bg-vh-red-light'"
               >
                 <span>&bull; {{ suggestions[2].accepted ? suggestions[2].suggested : suggestions[2].original }}</span>
                 <span
                   class="w-4 h-4 text-white text-[10px] font-bold flex items-center justify-center shrink-0"
-                  :class="activeSuggestionIndex === 2 ? 'bg-[#D99B00]' : (suggestions[2].accepted ? 'bg-[#237A3B]' : 'bg-[#D9534F]')"
+                  :class="activeSuggestionIndex === 2 ? 'bg-vh-yellow-border' : (suggestions[2].accepted ? 'bg-vh-green' : 'bg-vh-red')"
                 >3</span>
               </div>
 
@@ -90,13 +90,13 @@
               <div
                 class="p-2.5 transition-colors flex items-start justify-between gap-2"
                 :class="activeSuggestionIndex === 3
-                  ? 'border-2 border-[#D99B00] bg-white'
-                  : suggestions[3].accepted ? 'bg-[#EAF7EE]' : 'bg-[#FDE8E8]'"
+                  ? 'border-2 border-vh-yellow-border bg-white'
+                  : suggestions[3].accepted ? 'bg-vh-green-light' : 'bg-vh-red-light'"
               >
                 <span>&bull; {{ suggestions[3].accepted ? suggestions[3].suggested : suggestions[3].original }}</span>
                 <span
                   class="w-4 h-4 text-white text-[10px] font-bold flex items-center justify-center shrink-0"
-                  :class="activeSuggestionIndex === 3 ? 'bg-[#D99B00]' : (suggestions[3].accepted ? 'bg-[#237A3B]' : 'bg-[#D9534F]')"
+                  :class="activeSuggestionIndex === 3 ? 'bg-vh-yellow-border' : (suggestions[3].accepted ? 'bg-vh-green' : 'bg-vh-red')"
                 >4</span>
               </div>
 
@@ -107,13 +107,13 @@
               <div
                 class="p-2.5 transition-colors flex items-start justify-between gap-2"
                 :class="activeSuggestionIndex === 4
-                  ? 'border-2 border-[#D99B00] bg-white'
-                  : suggestions[4].accepted ? 'bg-[#EAF7EE]' : 'bg-[#FDE8E8]'"
+                  ? 'border-2 border-vh-yellow-border bg-white'
+                  : suggestions[4].accepted ? 'bg-vh-green-light' : 'bg-vh-red-light'"
               >
                 <span>&bull; {{ suggestions[4].accepted ? suggestions[4].suggested : suggestions[4].original }}</span>
                 <span
                   class="w-4 h-4 text-white text-[10px] font-bold flex items-center justify-center shrink-0"
-                  :class="activeSuggestionIndex === 4 ? 'bg-[#D99B00]' : (suggestions[4].accepted ? 'bg-[#237A3B]' : 'bg-[#D9534F]')"
+                  :class="activeSuggestionIndex === 4 ? 'bg-vh-yellow-border' : (suggestions[4].accepted ? 'bg-vh-green' : 'bg-vh-red')"
                 >5</span>
               </div>
             </div>
@@ -153,26 +153,26 @@
                 v-for="(sug, idx) in suggestions"
                 :key="idx"
                 class="flex-1 transition-colors"
-                :class="sug.accepted ? 'bg-[#237A3B]' : (idx === activeSuggestionIndex ? 'bg-[#D99B00]' : 'bg-neutral-200')"
+                :class="sug.accepted ? 'bg-vh-green' : (idx === activeSuggestionIndex ? 'bg-vh-yellow-border' : 'bg-neutral-200')"
               ></div>
             </div>
 
             <div class="text-center">
-              <span class="border border-[#D99B00] px-3 py-1 text-xs text-black font-medium inline-block">
+              <span class="border border-vh-yellow-border px-3 py-1 text-xs text-black font-medium inline-block">
                 {{ currentSuggestion.category }}
               </span>
             </div>
 
             <div class="space-y-1 text-center">
               <div class="text-[10px] text-neutral-500 uppercase tracking-wider">ORIGINAL</div>
-              <div class="bg-[#FDE8E8] p-3 text-xs text-black text-left leading-relaxed">
+              <div class="bg-vh-red-light p-3 text-xs text-black text-left leading-relaxed">
                 {{ currentSuggestion.original }}
               </div>
             </div>
 
             <div class="space-y-1 text-center">
               <div class="text-[10px] text-neutral-500 uppercase tracking-wider">SUGGESTED</div>
-              <div class="bg-[#EAF7EE] p-3 text-xs text-black text-left leading-relaxed">
+              <div class="bg-vh-green-light p-3 text-xs text-black text-left leading-relaxed">
                 {{ currentSuggestion.suggested }}
               </div>
             </div>
@@ -202,7 +202,7 @@
               </button>
             </div>
 
-            <div class="text-center text-xs text-[#1E6091] font-bold">
+            <div class="text-center text-xs text-vh-blue-dark font-bold">
               Score: {{ currentScore }} &rarr; {{ currentScore + currentSuggestion.impact }} if accepted
             </div>
           </div>
@@ -216,7 +216,7 @@
               <ScoreGauge :score="78" :show-score-label="true" />
             </div>
 
-            <div class="text-sm font-bold text-[#1E6091] pt-6">
+            <div class="text-sm font-bold text-vh-blue-dark pt-6">
               Your score went from 41 to 78.
             </div>
 
@@ -230,7 +230,7 @@
 
               <NuxtLink
                 to="/compare"
-                class="block w-full bg-white border border-[#237A3B] hover:bg-[#EAF7EE] text-[#237A3B] py-2.5 text-xs font-bold transition-colors text-center"
+                class="block w-full bg-white border border-vh-green hover:bg-vh-green-light text-vh-green py-2.5 text-xs font-bold transition-colors text-center"
               >
                 Compare to a Job Listing
               </NuxtLink>
