@@ -12,16 +12,16 @@
 
           <NuxtLink
             to="/upload"
-            class="block w-full bg-white border-2 border-[#1E7E34] hover:bg-[#F4F9F6] p-6 transition-colors group cursor-pointer"
+            class="block w-full bg-white border-2 border-vh-green-border hover:bg-vh-green-tint p-6 transition-colors group cursor-pointer"
           >
             <div class="flex items-center gap-5">
-              <div class="text-[#1E7E34] shrink-0">
+              <div class="text-vh-green-border shrink-0">
                 <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0-12l-4 4m4-4l4 4" />
                 </svg>
               </div>
-              <div class="text-[#1E7E34] text-sm font-semibold leading-snug">
+              <div class="text-vh-green-border text-sm font-semibold leading-snug">
                 Upload your Resume<br />to get feedback!
               </div>
             </div>
@@ -31,8 +31,8 @@
             :to="hasUploaded ? '/review' : '#'"
             class="block w-full p-6 transition-colors"
             :class="hasUploaded
-              ? 'bg-white border-2 border-[#1E7E34] hover:bg-[#F4F9F6] text-[#1E7E34]'
-              : 'bg-[#FDF5F5] border border-[#E2A9AF] text-[#D9534F] cursor-not-allowed'"
+              ? 'bg-white border-2 border-vh-green-border hover:bg-vh-green-tint text-vh-green-border'
+              : 'bg-vh-red-tint border border-vh-red-border text-vh-red cursor-not-allowed'"
             @click="handleReviewClick"
           >
             <div class="flex items-center justify-between">
@@ -46,7 +46,7 @@
                 </svg>
                 <span class="mt-0.5">Locked</span>
               </div>
-              <span v-else class="text-xs text-[#1E7E34] font-bold">Available &rarr;</span>
+              <span v-else class="text-xs text-vh-green-border font-bold">Available &rarr;</span>
             </div>
           </NuxtLink>
 
@@ -54,8 +54,8 @@
             :to="hasUploaded ? '/compare' : '#'"
             class="block w-full p-6 transition-colors"
             :class="hasUploaded
-              ? 'bg-white border-2 border-[#1E7E34] hover:bg-[#F4F9F6] text-[#1E7E34]'
-              : 'bg-[#F4F9F6] border border-[#A3CFBB] text-[#49886E] cursor-not-allowed'"
+              ? 'bg-white border-2 border-vh-green-border hover:bg-vh-green-tint text-vh-green-border'
+              : 'bg-vh-green-tint border border-vh-green-subtle text-vh-green-muted cursor-not-allowed'"
             @click="handleCompareClick"
           >
             <div class="flex items-center justify-between">
@@ -69,7 +69,7 @@
                 </svg>
                 <span class="mt-0.5">Locked</span>
               </div>
-              <span v-else class="text-xs text-[#1E7E34] font-bold">Available &rarr;</span>
+              <span v-else class="text-xs text-vh-green-border font-bold">Available &rarr;</span>
             </div>
           </NuxtLink>
 
@@ -85,7 +85,7 @@
         </div>
 
         <div class="space-y-6">
-          <div class="bg-white border border-[#CCCCCC] p-6 space-y-4">
+          <div class="bg-white border border-vh-gray-border p-6 space-y-4">
             <h2 class="text-sm font-bold text-center text-black">
               Resume Score
             </h2>
@@ -93,11 +93,11 @@
             <ScoreGauge :score="hasUploaded ? 78 : 50" :show-score-label="hasUploaded" />
 
             <div class="pt-4 text-center">
-              <p v-if="!hasUploaded" class="text-sm text-[#1E6091] leading-relaxed">
+              <p v-if="!hasUploaded" class="text-sm text-vh-blue-dark leading-relaxed">
                 Upload your resume to find<br />out how it scores.
               </p>
               <div v-else class="space-y-1">
-                <p class="text-sm text-[#237A3B] font-bold">
+                <p class="text-sm text-vh-green font-bold">
                   Score: 78 / 100
                 </p>
                 <p class="text-xs text-neutral-600">
@@ -107,7 +107,7 @@
             </div>
           </div>
 
-          <div class="bg-white border border-[#CCCCCC] p-6 space-y-2 text-center">
+          <div class="bg-white border border-vh-gray-border p-6 space-y-2 text-center">
             <h2 class="text-sm font-bold text-black">
               Saved Jobs
             </h2>
@@ -115,12 +115,12 @@
               Nothing here yet.
             </p>
             <div v-else class="text-left text-xs space-y-2 pt-1">
-              <div class="border border-[#CCCCCC] p-2.5 flex items-center justify-between">
+              <div class="border border-vh-gray-border p-2.5 flex items-center justify-between">
                 <div>
                   <div class="font-bold">IT Operations Manager</div>
                   <div class="text-neutral-500">Northline Health &bull; 69% Match</div>
                 </div>
-                <NuxtLink to="/compare" class="text-[#2B78E4] hover:underline">View</NuxtLink>
+                <NuxtLink to="/compare" class="text-vh-blue hover:underline">View</NuxtLink>
               </div>
             </div>
           </div>
