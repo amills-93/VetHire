@@ -17,21 +17,21 @@
 }
 
 .vh-input {
-  @apply w-full bg-white text-black border border-[#CCCCCC] px-3 py-2 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors;
+  @apply w-full bg-white text-black border border-vh-gray-border px-3 py-2 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors;
 }
 
 .vh-btn-green {
-  @apply bg-[#237A3B] hover:bg-[#1B6530] text-white px-5 py-2 text-sm font-medium transition-colors cursor-pointer text-center inline-flex items-center justify-center;
+  @apply bg-vh-green hover:bg-vh-green-hover text-white px-5 py-2 text-sm font-medium transition-colors cursor-pointer text-center inline-flex items-center justify-center;
 }
 
 .vh-btn-white {
-  @apply bg-white hover:bg-[#F5F5F3] text-black border border-black px-4 py-2 text-sm transition-colors cursor-pointer text-center inline-flex items-center justify-center;
+  @apply bg-white hover:bg-vh-gray-light text-black border border-black px-4 py-2 text-sm transition-colors cursor-pointer text-center inline-flex items-center justify-center;
 }
 
 .vh-btn-gray {
-  @apply bg-[#A8ACA9] text-white px-5 py-2 text-sm font-medium transition-colors cursor-pointer text-center inline-flex items-center justify-center;
+  @apply bg-vh-gray text-white px-5 py-2 text-sm font-medium transition-colors cursor-pointer text-center inline-flex items-center justify-center;
 }
 
 .vh-card {
-  @apply bg-white border border-[#CCCCCC] p-6;
+  @apply bg-white border border-vh-gray-border p-6;
 }
