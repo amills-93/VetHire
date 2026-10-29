@@ -3,8 +3,8 @@
     <AppHeader />
 
     <main class="flex-1 flex items-center justify-center p-6">
-      <div class="w-full max-w-md bg-white border border-[#CCCCCC] p-8 text-center space-y-6">
-        <div class="w-12 h-12 bg-[#EAF7EE] text-[#237A3B] border border-[#237A3B] mx-auto flex items-center justify-center text-xl font-bold">
+      <div class="w-full max-w-md bg-white border border-vh-gray-border p-8 text-center space-y-6">
+        <div class="w-12 h-12 bg-vh-green-light text-vh-green border border-vh-green mx-auto flex items-center justify-center text-xl font-bold">
           &check;
         </div>
 
