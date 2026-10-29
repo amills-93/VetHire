@@ -217,7 +217,7 @@
             </div>
 
             <div class="text-sm font-bold text-vh-blue-dark pt-6">
-              Your score went from 41 to 78.
+              Your score went from 41 to 67.
             </div>
 
             <div class="space-y-3 max-w-sm mx-auto pt-2">
@@ -295,7 +295,7 @@ const suggestions = ref([
     category: 'Civilianize staff appraisals',
     original: 'Rated 7 TSgts/SSgts on EPBs/ACAs; 3x SNCO selected for SNCOA in-residence.',
     suggested: 'Wrote annual performance reviews for 7 supervisors and mentored 3 team members into senior leadership programs.',
-    why: 'EPBs and SNCOA are USAF-specific jargon. People leadership and career coaching resonate with every hiring director.',
+    why: 'EPBs and SNCOA are jargon. People leadership and career coaching resonate with every hiring director.',
     impact: 4,
     accepted: false
   }
