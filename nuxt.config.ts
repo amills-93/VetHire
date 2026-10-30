@@ -1,8 +1,5 @@
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  serverMiddleware: [
-    '~/server/middleware/rate-limit.js',
-    '~/server/middleware/auth.js',
-  ],
+  // Nuxt 3 config - no serverMiddleware needed; server/api and server/middleware are auto-handled.
 })
