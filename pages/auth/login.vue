@@ -20,7 +20,7 @@
       <!-- Step 2: Password -->
       <div v-if="currentStep === 2" class="step-2">
         <input
-          type="password"
+
           placeholder="Password"
           v-model="password"
           :type="showPassword ? 'text' : 'password'"
@@ -28,7 +28,7 @@
         >
         <button @click="togglePassword">{{ showPassword ? 'Hide' : 'Show' }}</button>
         <div class="action-buttons">
-          <button @click="nextStep">Continue</button>
+          <button @click="continueLogin">Continue</button>
           <label><input type="checkbox"> Remember me</label>
         </div>
       </div>
@@ -54,12 +54,29 @@ export default {
   },
   methods: {
     nextStep() {
-      if (this.currentStep < 3) {
-        this.currentStep++;
+      if (this.currentStep === 1) {
+        this.currentStep = 2
       }
     },
     togglePassword() {
-      this.showPassword = !this.showPassword;
+      this.showPassword = !this.showPassword
+    },
+    async continueLogin() {
+      try {
+        const { token } = await $fetch('/api/auth/login', {
+          method: 'POST',
+          body: { email: this.email, password: this.password }
+        })
+        // Store token (e.g., localStorage)
+        localStorage.setItem('authToken', token)
+        // Show spinner
+        this.currentStep = 3
+        // Navigate to success page
+        this.$router.push('/success')
+      } catch (e) {
+        alert(e?.statusMessage || 'Login failed')
+        this.currentStep = 2 // back to password step
+      }
     }
   }
 };
