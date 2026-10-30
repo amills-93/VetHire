@@ -1,3 +1,5 @@
 FigmaDesign/
+node_modules/
+.nuxt/
 
 /generated/prisma
