@@ -3,17 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev",
-    "build": "nuxt build",
-    "generate": "nuxt generate",
-    "seed": "node scripts/seed.js"
+    "dev": "prisma generate && nuxt dev",
+    "build": "prisma generate && nuxt build",
+    "db:migrate": "prisma migrate deploy"
   },
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "@prisma/adapter-mssql": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "bcryptjs": "^3.0.3",
     "jsonwebtoken": "^9",
     "nuxt": "^3"
   },
   "devDependencies": {
+    "dotenv": "^18.0.9",
+    "prisma": "7.10.1",
     "typescript": "^5"
+  },
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=22"
   }
 }

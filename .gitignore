@@ -2,3 +2,8 @@ FigmaDesign/
 node_modules/
 .nuxt/
 
+.env
+.output/
+.data/
+server/generated/
+/staticwebapp.config.json

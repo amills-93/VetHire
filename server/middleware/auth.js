@@ -1,1 +1,0 @@
-// This file is no longer used; auth logic moved to server/api/auth/*.post.js
