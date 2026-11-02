@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #EFEFEA;
+    color: #111111;
+    font-family: 'Roboto Mono', 'Courier New', ui-monospace, monospace;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  input, button, select, textarea {
+    font-family: inherit;
+  }
+}
+
+/* VetHire retro-utilitarian UI primitives matching Figma screenshots */
+.vh-input {
+  @apply w-full bg-white text-black border border-[#CCCCCC] px-3 py-2 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors;
+}
+
+.vh-btn-green {
+  @apply bg-[#237A3B] hover:bg-[#1B6530] text-white px-5 py-2 text-sm font-medium transition-colors cursor-pointer text-center inline-flex items-center justify-center;
+}
+
+.vh-btn-white {
+  @apply bg-white hover:bg-[#F5F5F3] text-black border border-black px-4 py-2 text-sm transition-colors cursor-pointer text-center inline-flex items-center justify-center;
+}
+
+.vh-btn-gray {
+  @apply bg-[#A8ACA9] text-white px-5 py-2 text-sm font-medium transition-colors cursor-pointer text-center inline-flex items-center justify-center;
+}
+
+.vh-card {
+  @apply bg-white border border-[#CCCCCC] p-6;
+}
