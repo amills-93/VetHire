@@ -5,7 +5,7 @@
 * Git (should be added to your path)
 * pnpm (should be added to your path)
 
-## How to install dependencies
+### How to install dependencies
 ```bash
 pnpm i
 ```
@@ -14,5 +14,7 @@ pnpm i
 pnpm dev
 ```
 
-## TODO
-Write instructions on tasks
+## Tasks
+Log In
+Upload and Evaluate Resume
+Translate, Export, and Match a job
