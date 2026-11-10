@@ -1,18 +1,14 @@
 <template>
   <div class="min-h-screen bg-canvas flex flex-col font-mono">
-    <!-- Top Header -->
     <AppHeader :show-logout="false" />
 
-    <!-- Centered Login Card -->
     <div class="flex-1 flex items-center justify-center p-6">
       <div class="w-full max-w-[430px] bg-white border border-[#CCCCCC] p-8 space-y-6">
         <h1 class="text-xl font-bold text-center text-black tracking-tight">
           Log in to VetHire
         </h1>
 
-        <!-- Form Fields -->
         <form @submit.prevent="handleLogin" class="space-y-4">
-          <!-- Email Input -->
           <div>
             <label class="block text-xs text-black mb-1.5">Email</label>
             <input
@@ -24,7 +20,6 @@
             />
           </div>
 
-          <!-- Password Input -->
           <div>
             <label class="block text-xs text-black mb-1.5">Password</label>
             <input
@@ -36,7 +31,6 @@
             />
           </div>
 
-          <!-- Remember me checkbox -->
           <div class="flex items-center justify-center pt-1">
             <label class="flex items-center gap-2 cursor-pointer text-xs text-black select-none">
               <input
@@ -48,7 +42,6 @@
             </label>
           </div>
 
-          <!-- Log in Action Button (Gray if empty, Green when filled) -->
           <button
             type="submit"
             :disabled="!isFormValid || isLoading"
@@ -59,7 +52,6 @@
           </button>
         </form>
 
-        <!-- Footer Links -->
         <div class="flex items-center justify-between text-xs text-[#2B78E4] pt-2">
           <a href="#" @click.prevent="forgotPasswordPrompt" class="hover:underline">
             Forgot password?
@@ -74,10 +66,6 @@
 </template>
 
 <script setup>
-useHead({
-  title: 'Log in to VetHire'
-})
-
 const email = ref('jane.doe@email.com')
 const password = ref('')
 const rememberMe = ref(false)
@@ -100,7 +88,6 @@ const handleLogin = async () => {
     }
     router.push('/')
   } catch (err) {
-    // Prototype mode: proceed directly to Home as Jane Doe
     router.push('/')
   } finally {
     isLoading.value = false

@@ -29,7 +29,4 @@
 </template>
 
 <script setup>
-useHead({
-  title: 'VetHire - Welcome'
-})
 </script>
