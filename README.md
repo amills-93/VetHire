@@ -1,5 +1,18 @@
-Pure HTML and JS
+# VetHire
+## Requirements for running
 
-At this moment, we use heuristics, but we plan on doing this with a RAG-assisted LLM later. 
+* Node.js
+* Git (should be added to your path)
+* pnpm (should be added to your path)
 
-If you want to run this, you can just right click the html file in vscode and run in Live Browser. Tons of ways to run. 
+## How to install dependencies
+```bash
+pnpm i
+```
+## How to run project
+```bash
+pnpm dev
+```
+
+## TODO
+Write instructions on tasks
