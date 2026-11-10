@@ -1,25 +1,20 @@
 <template>
   <div class="min-h-screen bg-canvas flex flex-col font-mono text-black">
-    <!-- Top White Header -->
     <AppHeader />
 
-    <!-- Main Dashboard Container -->
     <main class="flex-1 max-w-5xl w-full mx-auto p-8 sm:p-12">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         
-        <!-- Left Column: Actions & Greetings -->
         <div class="space-y-4">
           <h1 class="text-xl font-bold tracking-tight text-center sm:text-left mb-6">
             Welcome, Jane
           </h1>
 
-          <!-- Action 1: Upload your Resume to get feedback! -->
           <NuxtLink
             to="/upload"
             class="block w-full bg-white border-2 border-[#1E7E34] hover:bg-[#F4F9F6] p-6 transition-colors group cursor-pointer"
           >
             <div class="flex items-center gap-5">
-              <!-- Upload Icon Tray -->
               <div class="text-[#1E7E34] shrink-0">
                 <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
@@ -32,7 +27,6 @@
             </div>
           </NuxtLink>
 
-          <!-- Action 2: Review Feedback (Locked initially or unlocked if uploaded) -->
           <NuxtLink
             :to="hasUploaded ? '/review' : '#'"
             class="block w-full p-6 transition-colors"
@@ -47,14 +41,15 @@
                 v-if="!hasUploaded"
                 class="border border-black px-2 py-1 text-[10px] text-black bg-white flex flex-col items-center leading-none"
               >
-                <span>🔒</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
                 <span class="mt-0.5">Locked</span>
               </div>
               <span v-else class="text-xs text-[#1E7E34] font-bold">Available &rarr;</span>
             </div>
           </NuxtLink>
 
-          <!-- Action 3: Compare to Job Listing (Locked initially or unlocked if reviewed) -->
           <NuxtLink
             :to="hasUploaded ? '/compare' : '#'"
             class="block w-full p-6 transition-colors"
@@ -69,14 +64,15 @@
                 v-if="!hasUploaded"
                 class="border border-black px-2 py-1 text-[10px] text-black bg-white flex flex-col items-center leading-none"
               >
-                <span>🔒</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
                 <span class="mt-0.5">Locked</span>
               </div>
               <span v-else class="text-xs text-[#1E7E34] font-bold">Available &rarr;</span>
             </div>
           </NuxtLink>
 
-          <!-- Prototype Quick Toggle to test both states -->
           <div class="pt-4 flex items-center justify-between text-xs text-neutral-500">
             <span>Prototype state:</span>
             <button
@@ -88,18 +84,14 @@
           </div>
         </div>
 
-        <!-- Right Column: Metric Widgets -->
         <div class="space-y-6">
-          <!-- Resume Score Card -->
           <div class="bg-white border border-[#CCCCCC] p-6 space-y-4">
             <h2 class="text-sm font-bold text-center text-black">
               Resume Score
             </h2>
 
-            <!-- Colored 3-segment Gauge -->
             <ScoreGauge :score="hasUploaded ? 78 : 50" :show-score-label="hasUploaded" />
 
-            <!-- Status message below gauge -->
             <div class="pt-4 text-center">
               <p v-if="!hasUploaded" class="text-sm text-[#1E6091] leading-relaxed">
                 Upload your resume to find<br />out how it scores.
@@ -115,7 +107,6 @@
             </div>
           </div>
 
-          <!-- Saved Jobs Card -->
           <div class="bg-white border border-[#CCCCCC] p-6 space-y-2 text-center">
             <h2 class="text-sm font-bold text-black">
               Saved Jobs
@@ -141,10 +132,6 @@
 </template>
 
 <script setup>
-useHead({
-  title: 'VetHire - Home'
-})
-
 const hasUploaded = ref(false)
 
 onMounted(() => {
