@@ -1,11 +1,9 @@
 <template>
   <header class="w-full bg-white border-b border-[#CCCCCC] px-8 py-3.5 flex items-center justify-between sticky top-0 z-30">
-    <!-- Brand Title -->
     <NuxtLink to="/" class="text-base font-bold tracking-wider text-black font-mono">
       VETHIRE
     </NuxtLink>
 
-    <!-- Logout Action Button -->
     <NuxtLink
       v-if="showLogout"
       to="/auth/login"

@@ -16,7 +16,6 @@
   }
 }
 
-/* VetHire retro-utilitarian UI primitives matching Figma screenshots */
 .vh-input {
   @apply w-full bg-white text-black border border-[#CCCCCC] px-3 py-2 text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-colors;
 }
