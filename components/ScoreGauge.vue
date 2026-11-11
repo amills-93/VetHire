@@ -1,9 +1,9 @@
 <template>
   <div class="w-full space-y-2 font-mono">
     <div class="w-full h-8 flex overflow-hidden">
-      <div class="flex-1 bg-[#DE5246]" :class="softColors ? 'opacity-80' : ''"></div>
-      <div class="flex-1 bg-[#F4CE42]" :class="softColors ? 'opacity-80' : ''"></div>
-      <div class="flex-1 bg-[#237A3B]" :class="softColors ? 'opacity-80' : ''"></div>
+      <div class="flex-1 bg-vh-red-gauge" :class="softColors ? 'opacity-80' : ''"></div>
+      <div class="flex-1 bg-vh-yellow-gauge" :class="softColors ? 'opacity-80' : ''"></div>
+      <div class="flex-1 bg-vh-green" :class="softColors ? 'opacity-80' : ''"></div>
     </div>
 
     <div class="relative pt-1">
