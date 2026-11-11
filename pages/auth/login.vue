@@ -3,7 +3,7 @@
     <AppHeader :show-logout="false" />
 
     <div class="flex-1 flex items-center justify-center p-6">
-      <div class="w-full max-w-[430px] bg-white border border-[#CCCCCC] p-8 space-y-6">
+      <div class="w-full max-w-md bg-white border border-vh-gray-border p-8 space-y-6">
         <h1 class="text-xl font-bold text-center text-black tracking-tight">
           Log in to VetHire
         </h1>
@@ -15,7 +15,7 @@
               type="email"
               v-model="email"
               placeholder="you@email.com"
-              class="w-full bg-white border border-[#CCCCCC] focus:border-[#2B6CB0] focus:ring-1 focus:ring-[#2B6CB0] outline-none px-3 py-2 text-sm text-black"
+              class="w-full bg-white border border-vh-gray-border focus:border-vh-blue-focus focus:ring-1 focus:ring-vh-blue-focus outline-none px-3 py-2 text-sm text-black"
               required
             />
           </div>
@@ -26,7 +26,7 @@
               type="password"
               v-model="password"
               placeholder="Enter your password"
-              class="w-full bg-white border border-[#CCCCCC] focus:border-[#2B6CB0] focus:ring-1 focus:ring-[#2B6CB0] outline-none px-3 py-2 text-sm text-black"
+              class="w-full bg-white border border-vh-gray-border focus:border-vh-blue-focus focus:ring-1 focus:ring-vh-blue-focus outline-none px-3 py-2 text-sm text-black"
               required
             />
           </div>
@@ -36,7 +36,7 @@
               <input
                 type="checkbox"
                 v-model="rememberMe"
-                class="w-3.5 h-3.5 accent-[#237A3B] border border-black rounded-none"
+                class="w-3.5 h-3.5 accent-vh-green border border-black rounded-none"
               />
               <span>Remember me</span>
             </label>
@@ -46,13 +46,13 @@
             type="submit"
             :disabled="!isFormValid || isLoading"
             class="w-full py-2.5 text-sm font-medium text-white transition-colors cursor-pointer text-center"
-            :class="isFormValid ? 'bg-[#237A3B] hover:bg-[#1B6530]' : 'bg-[#A8ACA9] cursor-not-allowed'"
+            :class="isFormValid ? 'bg-vh-green hover:bg-vh-green-hover' : 'bg-vh-gray cursor-not-allowed'"
           >
             {{ isLoading ? 'Logging in...' : 'Log in' }}
           </button>
         </form>
 
-        <div class="flex items-center justify-between text-xs text-[#2B78E4] pt-2">
+        <div class="flex items-center justify-between text-xs text-vh-blue pt-2">
           <a href="#" @click.prevent="forgotPasswordPrompt" class="hover:underline">
             Forgot password?
           </a>
