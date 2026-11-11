@@ -14,7 +14,7 @@
             @dragleave.prevent="isDragging = false"
             @drop.prevent="handleDrop"
             class="border-2 border-dashed border-black bg-transparent p-12 flex flex-col items-center justify-center text-center transition-colors"
-            :class="isDragging ? 'bg-[#EAF7EE]' : ''"
+            :class="isDragging ? 'bg-vh-green-light' : ''"
           >
             <input
               ref="fileInputRef"
@@ -40,14 +40,14 @@
             </button>
           </div>
 
-          <p class="text-xs text-[#237A3B] text-center font-mono">
+          <p class="text-xs text-vh-green text-center font-mono">
             Click the button above to select<br />and upload your resume!
           </p>
 
           <div class="text-center pt-2">
             <button
               @click="loadSampleResume"
-              class="text-xs text-[#2B78E4] hover:underline"
+              class="text-xs text-vh-blue hover:underline"
             >
               (Demo: Load totally real resume)
             </button>
@@ -55,7 +55,7 @@
         </div>
 
         <div v-else class="space-y-6 max-w-2xl mx-auto">
-          <div class="border-2 border-[#237A3B] bg-white p-6 flex flex-col items-center justify-center text-center space-y-2">
+          <div class="border-2 border-vh-green bg-white p-6 flex flex-col items-center justify-center text-center space-y-2">
             <div class="text-black">
               <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -69,7 +69,7 @@
             </div>
             <button
               @click="resetFile"
-              class="text-xs text-[#2B78E4] hover:underline pt-1"
+              class="text-xs text-vh-blue hover:underline pt-1"
             >
               Change file
             </button>
@@ -86,14 +86,14 @@
                   v-for="job in ['IT / Cybersecurity Management', 'Project Management']"
                   :key="job"
                   class="flex-1 border p-2.5 flex items-center gap-2 cursor-pointer transition-colors"
-                  :class="selectedTarget === job ? 'border-black bg-white font-bold' : 'border-[#CCCCCC] bg-white hover:border-black'"
+                  :class="selectedTarget === job ? 'border-black bg-white font-bold' : 'border-vh-gray-border bg-white hover:border-black'"
                 >
                   <input
                     type="radio"
                     name="targetJob"
                     :value="job"
                     v-model="selectedTarget"
-                    class="accent-[#237A3B]"
+                    class="accent-vh-green"
                   />
                   <span>{{ job }}</span>
                 </label>
@@ -104,14 +104,14 @@
                   v-for="job in ['Teaching & Training', 'Network Engineering']"
                   :key="job"
                   class="flex-1 border p-2.5 flex items-center gap-2 cursor-pointer transition-colors"
-                  :class="selectedTarget === job ? 'border-black bg-white font-bold' : 'border-[#CCCCCC] bg-white hover:border-black'"
+                  :class="selectedTarget === job ? 'border-black bg-white font-bold' : 'border-vh-gray-border bg-white hover:border-black'"
                 >
                   <input
                     type="radio"
                     name="targetJob"
                     :value="job"
                     v-model="selectedTarget"
-                    class="accent-[#237A3B]"
+                    class="accent-vh-green"
                   />
                   <span>{{ job }}</span>
                 </label>
@@ -120,14 +120,14 @@
               <div>
                 <label
                   class="w-full border p-2.5 flex items-center justify-center gap-2 cursor-pointer transition-colors"
-                  :class="selectedTarget === 'Not sure yet, show me options' ? 'border-black bg-white font-bold' : 'border-[#CCCCCC] bg-white hover:border-black'"
+                  :class="selectedTarget === 'Not sure yet, show me options' ? 'border-black bg-white font-bold' : 'border-vh-gray-border bg-white hover:border-black'"
                 >
                   <input
                     type="radio"
                     name="targetJob"
                     value="Not sure yet, show me options"
                     v-model="selectedTarget"
-                    class="accent-[#237A3B]"
+                    class="accent-vh-green"
                   />
                   <span>Not sure yet, show me options</span>
                 </label>
@@ -138,7 +138,7 @@
               <button
                 @click="uploadAndAnalyze"
                 class="px-8 py-2.5 text-sm font-medium transition-colors cursor-pointer text-center"
-                :class="selectedTarget ? 'bg-[#237A3B] hover:bg-[#1B6530] text-white' : 'bg-[#A8ACA9] text-white'"
+                :class="selectedTarget ? 'bg-vh-green hover:bg-vh-green-hover text-white' : 'bg-vh-gray text-white'"
               >
                 Upload & Analyze
               </button>
