@@ -1,20 +1,17 @@
 <template>
   <div class="w-full space-y-2 font-mono">
-    <!-- 3-Segment Color Bar -->
     <div class="w-full h-8 flex overflow-hidden">
-      <div class="flex-1 bg-[#DE5246]" :class="softColors ? 'opacity-80' : ''"></div>
-      <div class="flex-1 bg-[#F4CE42]" :class="softColors ? 'opacity-80' : ''"></div>
-      <div class="flex-1 bg-[#237A3B]" :class="softColors ? 'opacity-80' : ''"></div>
+      <div class="flex-1 bg-vh-red-gauge" :class="softColors ? 'opacity-80' : ''"></div>
+      <div class="flex-1 bg-vh-yellow-gauge" :class="softColors ? 'opacity-80' : ''"></div>
+      <div class="flex-1 bg-vh-green" :class="softColors ? 'opacity-80' : ''"></div>
     </div>
 
-    <!-- Bad / Good Text Labels & Arrow -->
     <div class="relative pt-1">
       <div class="flex justify-between text-xs text-black">
         <span>Bad</span>
         <span>Good</span>
       </div>
 
-      <!-- Arrow Indicator -->
       <div
         class="absolute -top-1 transform -translate-x-1/2 flex flex-col items-center pointer-events-none transition-all duration-500"
         :style="{ left: `${clampedScore}%` }"

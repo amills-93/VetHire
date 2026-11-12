@@ -23,7 +23,8 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'azure',
+    // Runs as a plain Node server on Azure App Service (Linux)
+    preset: 'node-server',
 
     prerender: {
       routes: ['/']

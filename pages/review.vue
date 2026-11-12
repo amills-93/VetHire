@@ -1,24 +1,19 @@
 <template>
   <div class="min-h-screen bg-canvas flex flex-col font-mono text-black">
-    <!-- Top White Header -->
     <AppHeader />
 
-    <!-- Top Success Download Toast Banner (Visible after download) -->
     <div
       v-if="showDownloadToast"
-      class="w-full bg-[#237A3B] text-white py-2 px-4 text-center text-xs font-mono flex items-center justify-center gap-3 transition-all"
+      class="w-full bg-vh-green text-white py-2 px-4 text-center text-xs font-mono flex items-center justify-center gap-3 transition-all"
     >
       <span>Downloaded Doe_Jane_Resume_Civilian.pdf &bull; saved to your profile</span>
       <button @click="showDownloadToast = false" class="text-white hover:text-black">&times;</button>
     </div>
 
-    <!-- Main 2-Column Review Interface -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 flex flex-col justify-between">
       <div class="flex flex-col lg:flex-row items-start gap-4">
         
-        <!-- Left Column: The Military Resume View -->
         <div class="flex-1 w-full bg-white border border-black p-6 space-y-4 shadow-none">
-          <!-- Resume Header -->
           <div class="text-center pb-2 border-b border-neutral-200">
             <h1 class="text-base font-bold text-black tracking-tight">
               MSGT (E-7) JANE J. DOE, USAF
@@ -31,7 +26,6 @@
             </p>
           </div>
 
-          <!-- Section 1: Professional Profile -->
           <div>
             <h2 class="text-xs font-bold text-black uppercase mb-1">
               PROFESSIONAL PROFILE
@@ -39,15 +33,14 @@
             <div
               class="p-2.5 text-xs leading-relaxed flex items-start justify-between gap-2 transition-colors"
               :class="activeSuggestionIndex === 0
-                ? 'border-2 border-[#D99B00] bg-white'
-                : suggestions[0].accepted ? 'bg-[#EAF7EE]' : 'bg-neutral-50'"
+                ? 'border-2 border-vh-yellow-border bg-white'
+                : suggestions[0].accepted ? 'bg-vh-green-light' : 'bg-neutral-50'"
             >
               <span>{{ suggestions[0].accepted ? suggestions[0].suggested : suggestions[0].original }}</span>
-              <span class="w-4 h-4 rounded-none bg-[#237A3B] text-white text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
+              <span class="w-4 h-4 rounded-none bg-vh-green text-white text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
             </div>
           </div>
 
-          <!-- Section 2: Core Competencies -->
           <div>
             <h2 class="text-xs font-bold text-black uppercase mb-1">
               CORE COMPETENCIES
@@ -57,7 +50,6 @@
             </p>
           </div>
 
-          <!-- Section 3: Experience -->
           <div class="space-y-2">
             <h2 class="text-xs font-bold text-black uppercase">
               EXPERIENCE
@@ -66,11 +58,11 @@
             <div
               class="p-2 text-xs font-medium flex items-center justify-between"
               :class="activeSuggestionIndex === 1
-                ? 'border-2 border-[#D99B00] bg-white'
-                : suggestions[1].accepted ? 'bg-[#EAF7EE]' : 'bg-neutral-50'"
+                ? 'border-2 border-vh-yellow-border bg-white'
+                : suggestions[1].accepted ? 'bg-vh-green-light' : 'bg-neutral-50'"
             >
               <span>{{ suggestions[1].accepted ? suggestions[1].suggested : suggestions[1].original }}</span>
-              <span class="w-4 h-4 bg-[#237A3B] text-white text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
+              <span class="w-4 h-4 bg-vh-green text-white text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
             </div>
 
             <div class="text-[10px] text-neutral-500">
@@ -78,62 +70,56 @@
             </div>
 
             <div class="space-y-2 text-xs">
-              <!-- Bullet 3 (Measurable results) -->
               <div
                 class="p-2.5 transition-colors flex items-start justify-between gap-2"
                 :class="activeSuggestionIndex === 2
-                  ? 'border-2 border-[#D99B00] bg-white'
-                  : suggestions[2].accepted ? 'bg-[#EAF7EE]' : 'bg-[#FDE8E8]'"
+                  ? 'border-2 border-vh-yellow-border bg-white'
+                  : suggestions[2].accepted ? 'bg-vh-green-light' : 'bg-vh-red-light'"
               >
                 <span>&bull; {{ suggestions[2].accepted ? suggestions[2].suggested : suggestions[2].original }}</span>
                 <span
                   class="w-4 h-4 text-white text-[10px] font-bold flex items-center justify-center shrink-0"
-                  :class="activeSuggestionIndex === 2 ? 'bg-[#D99B00]' : (suggestions[2].accepted ? 'bg-[#237A3B]' : 'bg-[#D9534F]')"
+                  :class="activeSuggestionIndex === 2 ? 'bg-vh-yellow-border' : (suggestions[2].accepted ? 'bg-vh-green' : 'bg-vh-red')"
                 >3</span>
               </div>
 
-              <!-- Bullet (Standard) -->
               <div class="p-1 text-neutral-800">
                 &bull; Oversaw TCNO/MTO/CTO compliance; closed 2,300+ IAVAs/IAVBs within suspense.
               </div>
 
-              <!-- Bullet 4 (RMF enclaves) -->
               <div
                 class="p-2.5 transition-colors flex items-start justify-between gap-2"
                 :class="activeSuggestionIndex === 3
-                  ? 'border-2 border-[#D99B00] bg-white'
-                  : suggestions[3].accepted ? 'bg-[#EAF7EE]' : 'bg-[#FDE8E8]'"
+                  ? 'border-2 border-vh-yellow-border bg-white'
+                  : suggestions[3].accepted ? 'bg-vh-green-light' : 'bg-vh-red-light'"
               >
                 <span>&bull; {{ suggestions[3].accepted ? suggestions[3].suggested : suggestions[3].original }}</span>
                 <span
                   class="w-4 h-4 text-white text-[10px] font-bold flex items-center justify-center shrink-0"
-                  :class="activeSuggestionIndex === 3 ? 'bg-[#D99B00]' : (suggestions[3].accepted ? 'bg-[#237A3B]' : 'bg-[#D9534F]')"
+                  :class="activeSuggestionIndex === 3 ? 'bg-vh-yellow-border' : (suggestions[3].accepted ? 'bg-vh-green' : 'bg-vh-red')"
                 >4</span>
               </div>
 
-              <!-- Bullet (Standard) -->
               <div class="p-1 text-neutral-800">
                 &bull; Drove ACC/AFCYBER NOSC transition to SDN-based architecture; recognized by 16 AF/CC.
               </div>
 
-              <!-- Bullet 5 (Mentorship / Reviews) -->
               <div
                 class="p-2.5 transition-colors flex items-start justify-between gap-2"
                 :class="activeSuggestionIndex === 4
-                  ? 'border-2 border-[#D99B00] bg-white'
-                  : suggestions[4].accepted ? 'bg-[#EAF7EE]' : 'bg-[#FDE8E8]'"
+                  ? 'border-2 border-vh-yellow-border bg-white'
+                  : suggestions[4].accepted ? 'bg-vh-green-light' : 'bg-vh-red-light'"
               >
                 <span>&bull; {{ suggestions[4].accepted ? suggestions[4].suggested : suggestions[4].original }}</span>
                 <span
                   class="w-4 h-4 text-white text-[10px] font-bold flex items-center justify-center shrink-0"
-                  :class="activeSuggestionIndex === 4 ? 'bg-[#D99B00]' : (suggestions[4].accepted ? 'bg-[#237A3B]' : 'bg-[#D9534F]')"
+                  :class="activeSuggestionIndex === 4 ? 'bg-vh-yellow-border' : (suggestions[4].accepted ? 'bg-vh-green' : 'bg-vh-red')"
                 >5</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Middle Column: Navigation Arrows -->
         <div class="hidden lg:flex flex-col gap-2 pt-24 shrink-0">
           <button
             @click="prevSuggestion"
@@ -151,12 +137,8 @@
           </button>
         </div>
 
-        <!-- Right Column: Suggested Feedback Panel -->
         <div class="flex-1 w-full bg-white border border-black p-6 space-y-6">
-          
-          <!-- State A: Active Suggestion Review Mode -->
           <div v-if="!allReviewed" class="space-y-5">
-            <!-- Header: Title and Counter -->
             <div class="flex items-center justify-between">
               <h2 class="text-base font-bold text-black">
                 Suggested feedback
@@ -166,45 +148,39 @@
               </span>
             </div>
 
-            <!-- 5-segment Progress Indicator -->
             <div class="flex gap-1.5 h-1.5 w-full">
               <div
                 v-for="(sug, idx) in suggestions"
                 :key="idx"
                 class="flex-1 transition-colors"
-                :class="sug.accepted ? 'bg-[#237A3B]' : (idx === activeSuggestionIndex ? 'bg-[#D99B00]' : 'bg-neutral-200')"
+                :class="sug.accepted ? 'bg-vh-green' : (idx === activeSuggestionIndex ? 'bg-vh-yellow-border' : 'bg-neutral-200')"
               ></div>
             </div>
 
-            <!-- Tag / Category -->
             <div class="text-center">
-              <span class="border border-[#D99B00] px-3 py-1 text-xs text-black font-medium inline-block">
+              <span class="border border-vh-yellow-border px-3 py-1 text-xs text-black font-medium inline-block">
                 {{ currentSuggestion.category }}
               </span>
             </div>
 
-            <!-- Original Block -->
             <div class="space-y-1 text-center">
               <div class="text-[10px] text-neutral-500 uppercase tracking-wider">ORIGINAL</div>
-              <div class="bg-[#FDE8E8] p-3 text-xs text-black text-left leading-relaxed">
+              <div class="bg-vh-red-light p-3 text-xs text-black text-left leading-relaxed">
                 {{ currentSuggestion.original }}
               </div>
             </div>
 
-            <!-- Suggested Block -->
             <div class="space-y-1 text-center">
               <div class="text-[10px] text-neutral-500 uppercase tracking-wider">SUGGESTED</div>
-              <div class="bg-[#EAF7EE] p-3 text-xs text-black text-left leading-relaxed">
+              <div class="bg-vh-green-light p-3 text-xs text-black text-left leading-relaxed">
                 {{ currentSuggestion.suggested }}
               </div>
             </div>
 
-            <!-- Explanation Note -->
             <p class="text-[11px] text-neutral-600 leading-relaxed">
               <span class="font-bold text-black">Why:</span> {{ currentSuggestion.why }}
             </p>
 
-            <!-- Action Buttons: Accept / Edit / Skip -->
             <div class="flex items-center justify-center gap-3 pt-2">
               <button
                 @click="acceptCurrentSuggestion"
@@ -226,29 +202,24 @@
               </button>
             </div>
 
-            <!-- Score Impact text -->
-            <div class="text-center text-xs text-[#1E6091] font-bold">
+            <div class="text-center text-xs text-vh-blue-dark font-bold">
               Score: {{ currentScore }} &rarr; {{ currentScore + currentSuggestion.impact }} if accepted
             </div>
           </div>
 
-          <!-- State B: All 5 Suggestions Reviewed Complete Mode -->
           <div v-else class="py-4 space-y-6 text-center">
             <h2 class="text-base font-bold text-black">
               All 5 suggestions reviewed!
             </h2>
 
-            <!-- 3-Segment Score Gauge -->
             <div class="max-w-md mx-auto pt-2">
               <ScoreGauge :score="78" :show-score-label="true" />
             </div>
 
-            <!-- Score Improvement Text -->
-            <div class="text-sm font-bold text-[#1E6091] pt-6">
-              Your score went from 41 to 78.
+            <div class="text-sm font-bold text-vh-blue-dark pt-6">
+              Your score went from 41 to 67.
             </div>
 
-            <!-- Action Buttons -->
             <div class="space-y-3 max-w-sm mx-auto pt-2">
               <button
                 @click="downloadResume"
@@ -259,7 +230,7 @@
 
               <NuxtLink
                 to="/compare"
-                class="block w-full bg-white border border-[#237A3B] hover:bg-[#EAF7EE] text-[#237A3B] py-2.5 text-xs font-bold transition-colors text-center"
+                class="block w-full bg-white border border-vh-green hover:bg-vh-green-light text-vh-green py-2.5 text-xs font-bold transition-colors text-center"
               >
                 Compare to a Job Listing
               </NuxtLink>
@@ -269,7 +240,6 @@
         </div>
       </div>
 
-      <!-- Bottom Go Back Action -->
       <div class="pt-8">
         <NuxtLink
           to="/"
@@ -289,7 +259,7 @@ useHead({
 
 const showDownloadToast = ref(false)
 const allReviewed = ref(false)
-const activeSuggestionIndex = ref(2) // Defaults to Suggestion 3 of 5 as in design screenshot
+const activeSuggestionIndex = ref(2)
 const currentScore = ref(56)
 
 const suggestions = ref([
@@ -329,7 +299,7 @@ const suggestions = ref([
     category: 'Civilianize staff appraisals',
     original: 'Rated 7 TSgts/SSgts on EPBs/ACAs; 3x SNCO selected for SNCOA in-residence.',
     suggested: 'Wrote annual performance reviews for 7 supervisors and mentored 3 team members into senior leadership programs.',
-    why: 'EPBs and SNCOA are USAF-specific jargon. People leadership and career coaching resonate with every hiring director.',
+    why: 'EPBs and SNCOA are jargon. People leadership and career coaching resonate with every hiring director.',
     impact: 4,
     accepted: false
   }
@@ -382,7 +352,6 @@ const skipCurrentSuggestion = () => {
 
 const downloadResume = () => {
   showDownloadToast.value = true
-  // Mock file download trigger
   const element = document.createElement('a')
   const file = new Blob(['MSGT (E-7) JANE J. DOE, USAF\nCivilianized Resume via VetHire\nScore: 78/100'], { type: 'text/plain' })
   element.href = URL.createObjectURL(file)
