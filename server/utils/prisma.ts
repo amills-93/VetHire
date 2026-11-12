@@ -3,7 +3,7 @@ import { PrismaClient } from '../generated/prisma/client'
 
 let prisma: PrismaClient | undefined
 
-// One client per Functions instance; created on first use so cold starts
+// One client per server process; created on first use so cold starts
 // without a request don't open a connection.
 export function usePrisma() {
   if (!prisma) {
