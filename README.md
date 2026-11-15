@@ -21,3 +21,6 @@ pnpm dev
 
 
 * Translate, Export, and Match a job
+
+## Video Link
+[https://youtu.be/EsnPwJf4UtI](url)
