@@ -15,6 +15,9 @@ pnpm dev
 ```
 
 ## Tasks
-Log In
-Upload and Evaluate Resume
-Translate, Export, and Match a job
+* Log In
+
+* Upload and Evaluate Resume
+
+
+* Translate, Export, and Match a job
