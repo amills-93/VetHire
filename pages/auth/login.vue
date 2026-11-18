@@ -8,6 +8,14 @@
           Log in to VetHire
         </h1>
 
+        <p
+          v-if="registered"
+          role="status"
+          class="border border-vh-green-subtle bg-vh-green-light text-vh-green px-3 py-2 text-xs text-center"
+        >
+          Account created. Log in to continue.
+        </p>
+
         <form @submit.prevent="handleLogin" class="space-y-4">
           <div>
             <label class="block text-xs text-black mb-1.5">Email</label>
@@ -56,9 +64,9 @@
           <a href="#" @click.prevent="forgotPasswordPrompt" class="hover:underline">
             Forgot password?
           </a>
-          <a href="#" @click.prevent="createAccountPrompt" class="hover:underline">
+          <NuxtLink to="/auth/signup" class="hover:underline">
             New here? Create an account
-          </a>
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -71,6 +79,9 @@ const password = ref('')
 const rememberMe = ref(false)
 const isLoading = ref(false)
 const router = useRouter()
+const route = useRoute()
+
+const registered = computed(() => route.query.registered === '1')
 
 const isFormValid = computed(() => {
   return email.value.trim().length > 0 && password.value.trim().length > 0
@@ -96,9 +107,5 @@ const handleLogin = async () => {
 
 const forgotPasswordPrompt = () => {
   alert('Password reset link sent to ' + (email.value || 'your email'))
-}
-
-const createAccountPrompt = () => {
-  alert('Account creation is open for the upcoming cohort.')
 }
 </script>
